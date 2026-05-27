@@ -1,32 +1,51 @@
 """Health and integration tests"""
 import pytest
-from fastapi.testclient import TestClient
 from unittest.mock import patch, AsyncMock
 
 
-# Integration test placeholder - requires running server
-def test_api_health():
-    """Test API health endpoint"""
-    # This would connect to running server
-    # In real scenario, use TestClient with FastAPI app
-    assert True  # Placeholder
+def test_app_imports():
+    """Test that app modules import correctly"""
+    from app.main import app
+    assert app is not None
 
 
-@pytest.mark.asyncio
-async def test_cors_enabled():
-    """Test CORS configuration"""
-    # CORS should be configured in main.py
-    assert True  # Placeholder
+def test_services_import():
+    """Test that services import correctly"""
+    from app.services import user_service, quiz_service, analytics_service
+    assert user_service is not None
+    assert quiz_service is not None
+    assert analytics_service is not None
 
 
-def test_api_documentation():
-    """Test OpenAPI docs availability"""
-    # /docs endpoint should be available
-    assert True  # Placeholder
+def test_models_import():
+    """Test that models import correctly"""
+    from app.models.user import UserCreate, UserResponse
+    from app.models.quiz import QuizSessionCreate, AnswerSubmit
+    from app.models.analytics import AnalyticsResponse
+    assert UserCreate is not None
+    assert QuizSessionCreate is not None
+    assert AnswerSubmit is not None
+    assert AnalyticsResponse is not None
 
 
-@pytest.mark.asyncio
-async def test_database_connection():
-    """Test MongoDB connection"""
-    # Database should connect on startup
-    assert True  # Placeholder
+def test_database_module_exists():
+    """Test database module exists"""
+    from app.database import db
+    assert db is not None
+    assert hasattr(db, 'get_db')
+
+
+def test_config_module_exists():
+    """Test config module exists"""
+    from app.config import Settings
+    assert Settings is not None
+
+
+def test_routes_modules_import():
+    """Test that route modules import correctly"""
+    from app.routes import users, exams, quiz, analytics, admin
+    assert users is not None
+    assert exams is not None
+    assert quiz is not None
+    assert analytics is not None
+    assert admin is not None
