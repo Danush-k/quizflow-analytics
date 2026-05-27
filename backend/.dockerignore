@@ -1,0 +1,15 @@
+# Backend .dockerignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env.local
+.venv
+venv/
+.git
+.gitignore
+.DS_Store
+*.log
+README.md
+tests/
+.pytest_cache

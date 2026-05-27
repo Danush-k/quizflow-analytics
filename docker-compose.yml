@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:7.0
+    container_name: quizflow-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: quizflow
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - quizflow-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quizflow-backend
+    ports:
+      - "8000:8000"
+    environment:
+      MONGODB_URL: mongodb://admin:password@mongo:27017/quizflow?authSource=admin
+      PYTHONUNBUFFERED: 1
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - quizflow-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  # Frontend UI
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: quizflow-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - quizflow-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  quizflow-network:
+    driver: bridge
