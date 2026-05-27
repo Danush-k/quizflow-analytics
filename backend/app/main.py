@@ -5,7 +5,7 @@ import logging
 
 from app.config import settings
 from app.database.db import connect_db, close_db
-from app.routes import users, exams, quiz, analytics, admin
+from app.routes import users, exams, quiz, analytics, admin, subjects
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -44,6 +44,7 @@ app.add_middleware(
 # Include routers
 app.include_router(users.router, prefix=f"{settings.API_PREFIX}/users", tags=["users"])
 app.include_router(exams.router, prefix=f"{settings.API_PREFIX}/exams", tags=["exams"])
+app.include_router(subjects.router, prefix=f"{settings.API_PREFIX}/subjects", tags=["subjects"])
 app.include_router(quiz.router, prefix=f"{settings.API_PREFIX}/quiz", tags=["quiz"])
 app.include_router(analytics.router, prefix=f"{settings.API_PREFIX}/analytics", tags=["analytics"])
 app.include_router(admin.router, prefix=f"{settings.API_PREFIX}/admin", tags=["admin"])

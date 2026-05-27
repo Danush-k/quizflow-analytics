@@ -1,17 +1,23 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 from app.services.quiz_service import QuizService
 from app.models.quiz import QuizSessionCreate, AnswerSubmit
 from datetime import datetime
 import logging
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
+class QuizStartRequest(BaseModel):
+    chapter_id: str
+
 @router.post("/start")
-async def start_quiz(data: QuizSessionCreate):
+async def start_quiz(data: QuizStartRequest, x_user_id: str = Header(None)):
     """Start a new quiz session"""
     try:
-        result = await QuizService.start_quiz(data.user_id, data.chapter_id)
+        if not x_user_id:
+            raise HTTPException(status_code=401, detail="User ID required. Missing X-User-ID header")
+        result = await QuizService.start_quiz(x_user_id, data.chapter_id)
         return {
             "success": True,
             "data": result,

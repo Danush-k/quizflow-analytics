@@ -51,25 +51,3 @@ async def get_subjects(exam_id: str):
     except Exception as e:
         logger.error(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/subjects/{subject_id}/chapters")
-async def get_chapters(subject_id: str):
-    """Get chapters for subject"""
-    try:
-        chapters = await ExamService.get_chapters_by_subject(subject_id)
-        return {
-            "success": True,
-            "data": [
-                {
-                    "chapter_id": c["chapter_id"],
-                    "subject_id": c["subject_id"],
-                    "name": c["name"],
-                    "total_questions": c.get("total_questions", 0)
-                }
-                for c in chapters
-            ],
-            "timestamp": datetime.utcnow().isoformat()
-        }
-    except Exception as e:
-        logger.error(f"Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
