@@ -9,11 +9,23 @@ db = None
 
 
 async def connect_db():
-    """Establish MongoDB connection with pooling configured for Atlas."""
+    """
+    Establish MongoDB connection with pooling configured for Atlas.
+    Reads from MONGODB_URI or MONGO_URL environment variable (in that priority order).
+    Fails fast with a clear error message if neither is set.
+    """
     global client, db
+
+    mongo_uri = settings.get_mongo_uri()
+    if not mongo_uri:
+        raise RuntimeError(
+            "❌ MongoDB URI not configured! "
+            "Set MONGODB_URI (or MONGO_URL) environment variable to your Atlas connection string."
+        )
+
     try:
         client = AsyncIOMotorClient(
-            settings.MONGODB_URI,
+            mongo_uri,
             serverSelectionTimeoutMS=8000,
             connectTimeoutMS=10000,
             socketTimeoutMS=30000,

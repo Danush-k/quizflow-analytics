@@ -9,8 +9,10 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     ENVIRONMENT: str = "production"
 
-    # Database
-    MONGODB_URI: str = "mongodb://localhost:27017"
+    # Database — must be set via environment variable (MONGODB_URI or MONGO_URL)
+    # No localhost fallback: deployment will fail fast if the env var is missing
+    MONGODB_URI: str = ""
+    MONGO_URL: str = ""         # Alias accepted by some deployment platforms
     DATABASE_NAME: str = "quiz_app"
 
     # Connection Pool
@@ -38,7 +40,11 @@ class Settings(BaseSettings):
     # Quiz
     DEFAULT_QUESTIONS_PER_QUIZ: int = 10
 
-    model_config = {"env_file": ".env"}
+    model_config = {"env_file": ".env", "extra": "ignore"}
+
+    def get_mongo_uri(self) -> str:
+        """Returns whichever MongoDB URI env var is set (MONGODB_URI takes priority over MONGO_URL)."""
+        return self.MONGODB_URI or self.MONGO_URL or ""
 
 
 settings = Settings()
