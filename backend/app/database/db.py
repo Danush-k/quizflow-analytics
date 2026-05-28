@@ -1,6 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from app.config import settings
-import certifi
 import logging
 
 logger = logging.getLogger(__name__)
@@ -33,9 +32,10 @@ async def connect_db():
             maxPoolSize=settings.DB_MAX_POOL_SIZE,
             minPoolSize=settings.DB_MIN_POOL_SIZE,
             retryWrites=True,
-            # Required for TLS connections on cloud platforms (Render, Railway, Fly.io)
-            # Uses certifi's CA bundle to verify MongoDB Atlas SSL certificates
-            tlsCAFile=certifi.where(),
+            # Atlas TLS fix for cloud deployment (Render/Railway)
+            # Bypasses strict certificate chain validation that fails on some container environments
+            tls=True,
+            tlsAllowInvalidCertificates=True,
         )
         db = client[settings.DATABASE_NAME]
 
