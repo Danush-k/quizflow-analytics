@@ -7,30 +7,27 @@
 /* ─── Global Base ─── */
 .wa-results-workspace {
   background: #f0f2f5;
-  min-height: calc(100vh - 70px);
-  padding: 24px 0 60px;
+  min-height: calc(100vh - 60px); /* adjusted for 60px navbar */
+  padding: 16px 0 60px; /* reduced excessive top gap */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1f2937;
 }
 
-/* ─── 1. STICKY TOP RESULT HEADER ─── */
+/* ─── 1. RESULT METRICS HEADER (NATURAL FLOW) ─── */
 .wa-sticky-result-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(7, 94, 84, 0.15);
-  border-radius: 20px;
-  padding: 16px 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  margin-bottom: 24px;
-  transition: all 0.3s ease;
+  position: relative; /* Scrolls naturally with layout flow */
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 2px solid rgba(7, 94, 84, 0.08);
+  border-radius: 12px; /* softer rounded corners */
+  padding: 14px 20px; /* balanced padding, avoiding layout compression */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02); /* subtle elevation shadow */
+  margin-bottom: 20px;
+  transition: all 0.25s ease;
 }
 
 .wa-sticky-result-header:hover {
-  box-shadow: 0 8px 30px rgba(7, 94, 84, 0.08);
+  box-shadow: 0 4px 16px rgba(7, 94, 84, 0.05);
 }
 
 .wa-header-summary-grid {
@@ -112,20 +109,30 @@
 .lvl-intermediate { background: #fef3c7; color: #d97706; border: 1px solid #fbbf24; }
 .lvl-beginner     { background: #fee2e2; color: #dc2626; border: 1px solid #f87171; }
 
-/* ─── 2. TAB WORKSPACE NAV BAR ─── */
+/* ─── 2. TAB WORKSPACE NAV BAR (PREMIUM STICKY TABS) ─── */
 .wa-workspace-nav-bar {
-  background: white;
-  border-radius: 16px;
-  padding: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  margin-bottom: 24px;
-  display: inline-block;
-  width: auto;
+  position: sticky;
+  top: 60px; /* Docked flush below the 60px fixed global navbar */
+  z-index: 999;
+  background: rgba(240, 242, 245, 0.85); /* Semi-transparent matching page bg */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 0; /* clean spacing */
+  margin-bottom: 20px;
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* subtle line separation on scroll */
+  transition: all 0.25s ease;
 }
 
 .wa-tabs-list {
   display: flex;
   gap: 4px;
+  background: #ffffff; /* Tabs container is clean white */
+  border-radius: 12px; /* Soft, balanced rounded corners */
+  padding: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); /* Subtle, premium shadow */
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .wa-tab-btn {
@@ -135,7 +142,7 @@
   padding: 10px 24px;
   font-size: 0.88rem;
   font-weight: 600;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.25s ease;
   outline: none;
@@ -298,7 +305,7 @@
 /* Linear Meter */
 .wa-spectrum-meter-wrap {
   position: relative;
-  padding: 24px 0 16px;
+  padding: 48px 0 16px; /* Increased top padding to prevent balloon overlap with subtitle */
   margin-bottom: 28px;
 }
 
@@ -372,13 +379,23 @@
 }
 
 .wa-meta-card {
-  background: #f9fafb;
-  border-radius: 14px;
+  background: #ffffff;
+  border-radius: 12px;
   padding: 16px 20px;
   display: flex;
   align-items: center;
   gap: 16px;
-  border-bottom: 3px solid transparent;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.wa-meta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
 }
 
 .wa-meta-card h4 {
@@ -395,13 +412,39 @@
 }
 
 .wa-mc-icon {
-  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
-.mc-correct  { border-color: #25D366; background: #e8f5e9; }
-.mc-wrong    { border-color: #E53935; background: #ffebee; }
-.mc-skipped  { border-color: #bbb; background: #f3f4f6; }
-.mc-flagged  { border-color: #FF9800; background: #fffbeb; }
+.mc-correct { border-left: 4px solid #25D366; }
+.mc-correct .wa-mc-icon {
+  background: rgba(37, 211, 102, 0.08);
+  border: 1px solid rgba(37, 211, 102, 0.15);
+}
+
+.mc-wrong { border-left: 4px solid #E53935; }
+.mc-wrong .wa-mc-icon {
+  background: rgba(229, 57, 53, 0.08);
+  border: 1px solid rgba(229, 57, 53, 0.15);
+}
+
+.mc-skipped { border-left: 4px solid #888888; }
+.mc-skipped .wa-mc-icon {
+  background: rgba(136, 136, 136, 0.08);
+  border: 1px solid rgba(136, 136, 136, 0.15);
+}
+
+.mc-flagged { border-left: 4px solid #FF9800; }
+.mc-flagged .wa-mc-icon {
+  background: rgba(255, 152, 0, 0.08);
+  border: 1px solid rgba(255, 152, 0, 0.15);
+}
 
 /* ─── TAB 2: ANALYTICS TAB ─── */
 .wa-analytics-dashboard-grid {
@@ -418,19 +461,20 @@
 
 .wa-analysis-card {
   background: white;
-  border-radius: 18px;
-  padding: 22px 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  border-top: 4px solid transparent;
+  border-radius: 12px; /* softer 12px corners */
+  padding: 18px 20px; /* balanced padding */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02); /* subtle lightweight shadow */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* soft neutral thin borders */
+  border-top: 2px solid #128C7E; /* unified top green accent line */
 }
 
 .wa-analysis-card h4 {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.82rem; /* calmer typography size */
+  font-weight: 600; /* calmer medium weight */
   text-transform: uppercase;
-  color: #128C7E;
-  margin: 0 0 16px;
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+  color: #374151; /* professional charcoal title */
+  margin: 0 0 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04); /* clean thin solid line */
   padding-bottom: 8px;
   letter-spacing: 0.5px;
 }
@@ -438,7 +482,7 @@
 .wa-stat-item {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   margin-bottom: 10px;
 }
 
@@ -447,24 +491,28 @@
 }
 
 .wa-stat-item span {
-  color: #666;
+  color: #6b7280; /* calmer gray label text */
 }
 
 .wa-stat-item strong {
-  color: #111;
-  font-weight: 700;
+  color: #1f2937; /* charcoal value text */
+  font-weight: 600; /* medium/bold weight */
 }
 
-.border-correct  { border-top-color: #25D366; }
-.border-time     { border-top-color: #FF6B6B; }
-.border-subject  { border-top-color: #6C63FF; }
-.border-behavior { border-top-color: #FF9800; }
+/* Unified Accent Borders - completely avoiding rainbow outlines */
+.border-correct,
+.border-time,
+.border-subject,
+.border-behavior {
+  border-top-color: #128C7E !important; /* solid premium WhatsApp green top accent */
+}
 
 .wa-analytics-sidebar {
   background: white;
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border-radius: 12px; /* softer 12px corners */
+  padding: 20px; /* balanced padding */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02); /* subtle lightweight shadow */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* soft neutral thin borders */
   display: flex;
   flex-direction: column;
 }
@@ -483,20 +531,23 @@
 }
 
 .wa-suggestion-bubble-card {
-  background: rgba(7, 94, 84, 0.06);
-  border-left: 4px solid #128C7E;
+  background: #f9fafb; /* soft neutral background */
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-left: 3px solid #128C7E; /* subtle left green accent line */
   padding: 12px 16px;
-  border-radius: 0 12px 12px 0;
+  border-radius: 6px; /* softer, cleaner corners */
   font-size: 0.82rem;
-  color: #333;
-  line-height: 1.45;
+  color: #4b5563; /* professional calm text */
+  line-height: 1.5;
 }
 
 /* ─── TAB 3: REVIEW ANSWERS WORKSPACE (3 PANEL) ─── */
 .wa-review-three-panel-workspace {
   display: grid;
   grid-template-columns: 280px 1fr 280px;
+  grid-template-rows: 100%; /* Strict single row height matching the container */
   height: 600px;
+  max-height: 600px; /* Constrain max-height explicitly */
   background: white;
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -510,6 +561,9 @@
   flex-direction: column;
   background: #ffffff;
   height: 100%;
+  max-height: 100%; /* Force strict grid height constraints */
+  overflow: hidden; /* Force child container .wa-left-nav-cards to scroll */
+  min-height: 0; /* Prevents grid item content-based stretching */
 }
 
 .wa-left-nav-header {
@@ -608,7 +662,9 @@
   background: #fcfbf9;
   flex: 1;
   overflow-y: auto;
-  min-height: 0;
+  height: 100%; /* Force exact matching height */
+  max-height: 100%; /* Force strict height constraints, triggering overflow scroll */
+  min-height: 0; /* Prevents grid item content-based stretching */
   padding: 32px 28px;
 }
 
@@ -619,11 +675,21 @@
 }
 
 .wa-center-q-header {
+  position: sticky;
+  top: -32px;
+  z-index: 10;
+  background: #fcfbf9;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px dashed #e5e7eb;
-  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin-top: -32px;
+  margin-left: -28px;
+  margin-right: -28px;
+  padding-left: 28px;
+  padding-right: 28px;
 }
 
 .wa-center-q-badge {
@@ -711,33 +777,227 @@
 .wa-center-opt-item.opt-key {
   border-color: #25D366;
   border-style: dashed;
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.wa-center-opt-item.opt-key .wa-opt-letter-bullet {
+  background: #25D366;
+  color: white;
 }
 
 /* Discussion / Explanation */
-.wa-center-discussion-block {
-  background: #fffbeb;
-  border-left: 4px solid #fbbf24;
-  padding: 18px;
-  border-radius: 0 14px 14px 0;
-  margin-top: 10px;
-  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.05);
+/* Discussion / Explanation Bubble (AI Tutor feedback style) */
+.wa-tutor-bubble-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+  width: 100%;
 }
 
+.wa-tutor-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #075E54; /* WhatsApp brand dark green */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(7, 94, 84, 0.15);
+  flex-shrink: 0;
+  border: 2px solid white;
+}
+
+.wa-tutor-avatar-icon {
+  line-height: 1;
+  display: inline-block;
+}
+
+.wa-center-discussion-block.wa-ai-tutor-bubble {
+  flex: 1;
+  background: #f2fbf6; /* Added a premium light-green touch */
+  padding: 16px 20px;
+  
+  /* Clean, conversational rounded speech bubble */
+  border-radius: 16px; 
+  
+  /* Modern soft neutral shadow and elevation */
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+  /* Soft premium entrance animation */
+  animation: waBubbleFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  
+  position: relative;
+  max-width: 92%; /* Elegant conversational layout width */
+}
+
+/* Perfect bordered speech tail notch pointing left to the avatar */
+.wa-center-discussion-block.wa-ai-tutor-bubble::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  background: #f2fbf6; /* matching light green background */
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transform: rotate(45deg);
+  z-index: 2;
+}
+
+/* Header Row for the discussion block */
+.wa-disc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+  padding-bottom: 8px;
+}
+
+/* Tiny assistant badge/label */
+.wa-ai-tutor-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e8f5e9;
+  color: #075E54;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(7, 94, 84, 0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Keep current typography hierarchy but improve spacing */
 .wa-disc-header {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #b45309;
-  margin-bottom: 6px;
+  color: #075E54;
   display: flex;
   align-items: center;
   gap: 6px;
+  margin: 0;
 }
 
+/* Conversation/explanation text */
 .wa-disc-expl-text {
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: #4b5563;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #374151;
   margin: 0;
+}
+
+/* Highlighted keywords for the correct answer */
+.wa-highlight-correct-badge {
+  background: #d9fdd3; /* WhatsApp light green incoming chip */
+  color: #075E54;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(7, 94, 84, 0.15);
+  font-weight: 600;
+  display: inline-block;
+  margin: 0 2px;
+}
+
+/* Compact Solution Insight Bubble styles */
+.wa-insight-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.wa-insight-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.wa-insight-icon {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.wa-insight-label {
+  font-weight: 600;
+  color: #4b5563;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.wa-insight-text {
+  color: #374151;
+}
+
+/* Common mistake line subtle highlights */
+.wa-insight-line.margin-mistake {
+  border-top: 1px dashed rgba(239, 68, 68, 0.15);
+  padding-top: 10.5px;
+  margin-top: 4px;
+}
+
+.wa-insight-label.label-mistake {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.wa-insight-text.text-mistake {
+  color: #b91c1c;
+}
+
+/* Key Concept & Mistake badges within conversational text */
+.wa-key-concept-highlight {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 1.5px 5px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  display: inline-block;
+  border: 1px solid rgba(46, 125, 50, 0.12);
+  margin: 0 2px;
+}
+
+.wa-mistake-highlight {
+  background: #ffebee;
+  color: #c62828;
+  padding: 1.5px 5px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  display: inline-block;
+  border: 1px solid rgba(198, 40, 40, 0.12);
+  margin: 0 2px;
+}
+
+/* Animation definition */
+@keyframes waBubbleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* 3. Right Panel insights / telemetry */
@@ -747,6 +1007,9 @@
   flex-direction: column;
   background: #ffffff;
   height: 100%;
+  max-height: 100%; /* Force strict grid height constraints */
+  overflow: hidden; /* Prevent internal content from expanding grid container */
+  min-height: 0; /* Prevents grid item content-based stretching */
 }
 
 .wa-telemetry-header {
@@ -979,4 +1242,657 @@
     padding: 8px 12px;
     font-size: 0.8rem;
   }
+}
+
+/* ─── Premium Modern Analytics Workspace (Apple/Stripe Inspired) ─────────── */
+.wa-premium-analytics-workspace {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
+  padding: 38px 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* 1. Performance Hero Section */
+.wa-analytics-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wa-hero-main-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .wa-hero-main-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+.wa-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wa-hero-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.wa-hero-stat h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.8px;
+  line-height: 1;
+}
+
+.wa-hero-sub-text {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.wa-hero-status-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-top: 2px;
+}
+
+.wa-hero-status-pill.lvl-beginner {
+  background: rgba(37, 211, 102, 0.08);
+  color: #075E54;
+  border: 1px solid rgba(37, 211, 102, 0.15);
+}
+
+.wa-hero-status-pill.lvl-intermediate {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fef3c7;
+}
+
+.wa-hero-status-pill.lvl-advanced {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
+}
+
+.wa-hero-status-pill.lvl-expert {
+  background: #faf5ff;
+  color: #6b21a8;
+  border: 1px solid #f3e8ff;
+}
+
+.wa-hero-progress-track {
+  height: 4px;
+  background: #f3f4f6;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.wa-hero-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #128C7E, #25D366);
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 2. Compact Metrics Grid */
+.wa-analytics-metrics-row {
+  display: flex;
+  align-items: stretch;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.02);
+  padding: 22px 28px;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.wa-metric-group {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-group-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.wa-metric-subrow {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.wa-submetric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wa-sub-lbl {
+  font-size: 0.74rem;
+  color: #6b7280;
+}
+
+.wa-submetric strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.wa-submetric strong.color-positive {
+  color: #128C7E;
+}
+
+.wa-submetric strong.color-negative {
+  color: #E53935;
+}
+
+.wa-metric-divider {
+  width: 1px;
+  background: rgba(0, 0, 0, 0.06);
+  align-self: stretch;
+}
+
+@media (max-width: 900px) {
+  .wa-metric-divider {
+    display: none;
+  }
+}
+
+/* 3. Performance & Behavioral Insights Feed */
+.wa-analytics-insights-feed-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 28px;
+}
+
+.wa-analytics-insights-feed-section h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.wa-insights-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wa-insight-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.wa-insight-feed-item:hover {
+  background: #f9fafb;
+  border-color: rgba(7, 94, 84, 0.08);
+}
+
+.wa-feed-icon {
+  font-size: 1.15rem;
+  background: #f3f4f6;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #128C7E;
+}
+
+.wa-feed-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wa-feed-item-body h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.wa-feed-item-body p {
+  font-size: 0.78rem;
+  color: #4b5563;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* 4. Suggestions & Assistant Guidance */
+.wa-analytics-guidance-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 28px;
+}
+
+.wa-guidance-card {
+  display: flex;
+  gap: 16px;
+  background: rgba(7, 94, 84, 0.025);
+  border: 1px solid rgba(7, 94, 84, 0.06);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.wa-guidance-icon {
+  font-size: 1.25rem;
+  color: #128C7E;
+  margin-top: 2px;
+}
+
+.wa-guidance-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wa-guidance-body h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #075E54;
+  margin: 0;
+}
+
+.wa-guidance-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wa-guidance-list li {
+  font-size: 0.78rem;
+  color: #4b5563;
+  line-height: 1.45;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Results Page — Compact 2×2 Performance Analytics Tab
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wa-perf-analytics-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Hero Stats Bar ──────────────────────────────────────────────────────── */
+.wa-res-perf-hero {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 14px;
+  padding: 18px 24px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+
+.wa-res-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.wa-res-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 28px;
+  flex: 1;
+  min-width: 90px;
+}
+
+.wa-res-hero-stat:first-child {
+  padding-left: 0;
+}
+
+.wa-res-hero-lbl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #9ca3af;
+}
+
+.wa-res-hero-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1f2937;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.wa-res-hero-sub {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #9ca3af;
+  letter-spacing: 0;
+}
+
+.wa-res-hero-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(7, 94, 84, 0.08);
+  color: #075E54;
+  width: fit-content;
+}
+
+.wa-res-hero-badge.lvl-expert { background: rgba(7,94,84,0.1); color: #075E54; }
+.wa-res-hero-badge.lvl-advanced { background: rgba(37,99,235,0.08); color: #1d4ed8; }
+.wa-res-hero-badge.lvl-intermediate { background: rgba(217,119,6,0.08); color: #b45309; }
+.wa-res-hero-badge.lvl-beginner { background: rgba(16,185,129,0.08); color: #065f46; }
+
+.wa-res-hero-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.wa-res-hero-progress-bg {
+  height: 3px;
+  background: #f3f4f6;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.wa-res-hero-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #128C7E, #25D366);
+  border-radius: 2px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── 2×2 Grid ────────────────────────────────────────────────────────────── */
+.wa-res-perf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ── Individual Block ────────────────────────────────────────────────────── */
+.wa-res-pg-block {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  transition: box-shadow 0.2s ease;
+  animation: fadeUp 0.4s ease both;
+}
+
+.wa-res-pg-block:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+/* ── Block Header ────────────────────────────────────────────────────────── */
+.wa-res-pg-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding-bottom: 10px;
+}
+
+.wa-res-pg-icon { font-size: 1rem; line-height: 1; }
+
+.wa-res-pg-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6b7280;
+}
+
+/* ── Primary Metric ──────────────────────────────────────────────────────── */
+.wa-res-pg-primary {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.wa-res-pg-bignum {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #128C7E;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.wa-res-pg-biglbl {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  font-weight: 500;
+  align-self: flex-end;
+  padding-bottom: 4px;
+}
+
+/* ── Mini Bar ────────────────────────────────────────────────────────────── */
+.wa-res-pg-mini-bar-bg {
+  height: 4px;
+  background: #f3f4f6;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.wa-res-pg-mini-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Metric Row (correct/incorrect/skipped chips) ────────────────────────── */
+.wa-res-pg-metric-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.wa-res-pg-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  flex: 1;
+  min-width: 55px;
+}
+
+.wa-res-pg-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.wa-res-pg-mval {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.wa-res-pg-mlbl {
+  font-size: 0.62rem;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── Behavior / Time label chip ──────────────────────────────────────────── */
+.wa-res-pg-chip {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #075E54;
+  background: rgba(7, 94, 84, 0.07);
+  border-radius: 20px;
+  padding: 5px 12px;
+  width: fit-content;
+}
+
+/* ── KV List ─────────────────────────────────────────────────────────────── */
+.wa-res-pg-kv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.wa-res-pg-kv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wa-res-pg-kv-key {
+  font-size: 0.74rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.wa-res-pg-kv-val {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* ── Guidance Strip ──────────────────────────────────────────────────────── */
+.wa-res-guidance-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(7, 94, 84, 0.04);
+  border: 1px solid rgba(7, 94, 84, 0.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+
+.wa-res-guidance-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.wa-res-guidance-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wa-res-guidance-list li {
+  font-size: 0.78rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .wa-res-perf-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wa-res-hero-stats {
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wa-res-hero-divider {
+    display: none;
+  }
+
+  .wa-res-hero-stat {
+    padding: 0;
+  }
+}
+
+/* ── Step-by-Step Explanation Styles ──────────────────────────────────────── */
+.wa-expl-step-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.wa-expl-step {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 16px;
+  border-left: 3px solid #128C7E;
+  transition: transform 0.2s ease;
+}
+
+.wa-expl-step:hover {
+  transform: translateX(2px);
+  background: #f3f4f6;
+}
+
+.wa-expl-step strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #075E54;
+  margin-bottom: 4px;
+}
+
+.wa-expl-step p {
+  font-size: 0.82rem;
+  color: #4a5568;
+  margin: 4px 0 0 0;
+  line-height: 1.5;
+}
+
+.wa-expl-step code {
+  background: #eef2f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  color: #1e293b;
+  font-weight: 600;
 }

@@ -778,3 +778,64 @@
   box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
 }
 
+/* ─── WhatsApp Style Exit Protection Confirmation Popup ─── */
+.wa-exit-header {
+  background: linear-gradient(135deg, #d32f2f 0%, #ef5350 100%) !important;
+}
+
+.wa-exit-logo {
+  background: rgba(255, 255, 255, 0.25) !important;
+  font-size: 1.8rem !important;
+}
+
+.wa-exit-body {
+  padding: 24px 24px 20px !important;
+  gap: 16px !important;
+}
+
+.wa-exit-message-main {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.wa-exit-message-sub {
+  font-size: 0.8rem;
+  color: #c62828;
+  text-align: center;
+  font-weight: 500;
+  margin: 0;
+  background: #fff5f5;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #fee2e2;
+  line-height: 1.5;
+}
+
+.wa-btn-exit-test {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fca5a5 !important;
+}
+
+.wa-btn-exit-test:hover {
+  background: #fca5a5 !important;
+  color: #b91c1c !important;
+  transform: translateY(-1px);
+}
+
+.wa-btn-continue-test {
+  background: linear-gradient(135deg, #128C7E, #25D366) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3) !important;
+}
+
+.wa-btn-continue-test:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4) !important;
+}
+

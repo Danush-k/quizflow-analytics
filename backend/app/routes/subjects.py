@@ -34,3 +34,31 @@ async def get_chapters(subject_id: str):
     except Exception as e:
         logger.error(f"Error fetching chapters: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# Chapters router - registered separately under /chapters prefix
+chapters_router = APIRouter()
+
+@chapters_router.get("/{chapter_id}/questions")
+async def get_chapter_questions(chapter_id: str):
+    """Get all questions for a chapter"""
+    try:
+        questions = await ExamService.get_questions_by_chapter(chapter_id)
+        return {
+            "success": True,
+            "data": [
+                {
+                    "question_id": q["question_id"],
+                    "question_text": q["question_text"],
+                    "options": q["options"],
+                    "correct_answer": q["correct_answer"],
+                    "chapter_id": q["chapter_id"]
+                }
+                for q in questions
+            ],
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        logger.error(f"Error fetching questions: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+

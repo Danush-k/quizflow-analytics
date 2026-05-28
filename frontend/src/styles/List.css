@@ -42,6 +42,10 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 220px;
 }
 
 .item-card:hover {
@@ -69,7 +73,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  margin-top: 12px;
+  margin-top: auto;
 }
 
 .item-button:hover {

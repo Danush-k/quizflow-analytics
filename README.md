@@ -1,336 +1,245 @@
-# WhatsApp-Style Quiz Application
+# SkillBytes — Adaptive Quiz Platform
 
-A full-stack quiz application with React frontend, FastAPI backend, and MongoDB database featuring a WhatsApp-like UX for one-question-at-a-time quiz flow.
+A full-stack quiz platform for competitive exam preparation (JEE, NEET, NPTEL) built with **FastAPI**, **React**, and **MongoDB Atlas**.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Client Browser                      │
+│              React 18 + Vite + Recharts                 │
+└──────────────────────────┬──────────────────────────────┘
+                           │ HTTP / REST
+┌──────────────────────────▼──────────────────────────────┐
+│                  FastAPI Backend                         │
+│   Routes → Services → MongoDB Aggregation Pipelines     │
+│   Async I/O (Motor) · Pydantic v2 validation            │
+└──────────────────────────┬──────────────────────────────┘
+                           │ motor (async driver)
+┌──────────────────────────▼──────────────────────────────┐
+│              MongoDB Atlas (cloud)                      │
+│   7 collections · Compound indexes · IST-aware queries  │
+└─────────────────────────────────────────────────────────┘
+```
 
 ## Features
 
-✅ **Quiz Flow**: Exam → Subject → Chapter → Quiz Starts
-✅ **One-Question-At-A-Time**: WhatsApp-style single question UX
-✅ **Multiple Choice**: Single correct answer per question
-✅ **No Negative Marking**: Right answers score points only
-✅ **Analytics Dashboard**: 9+ metrics tracking user engagement
-✅ **Dummy Data**: 50K+ realistic quiz responses
-✅ **Responsive Design**: Mobile & desktop optimized
+| Area | Details |
+|---|---|
+| **Quiz Engine** | Session state machine: `in_progress → completed / interrupted / abandoned` |
+| **Content Hierarchy** | Exam → Subject → Chapter → Questions |
+| **Answer Grading** | Accepts option letter (A/B/C/D) or full text; correct answer stored in DB |
+| **Explanations** | Per-question explanation served with answer review |
+| **Response Timing** | `response_duration_ms` recorded per question for analytics |
+| **Analytics** | 14+ metrics: DAU, WAU, drop-off funnel, accuracy by subject/chapter, peak hours |
+| **Overview API** | Single `/analytics/overview` call returns all dashboard KPIs |
 
 ## Tech Stack
 
-- **Frontend**: React 18 + Vite + React Router + Recharts
-- **Backend**: FastAPI + Motor (async MongoDB driver)
-- **Database**: MongoDB
-- **Styling**: CSS3 with WhatsApp color scheme
+- **Frontend**: React 18 · Vite · React Router v6 · Recharts · Axios
+- **Backend**: FastAPI · Motor (async MongoDB) · Pydantic v2 · Uvicorn
+- **Database**: MongoDB Atlas (M0 free tier)
+- **Deployment**: Backend → Render/Railway · Frontend → Vercel/Netlify
 
 ## Project Structure
 
 ```
 SkillBytes/
-├── frontend/                 # React application
-│   ├── src/
-│   │   ├── pages/           # Page components
-│   │   ├── components/      # Reusable components
-│   │   ├── services/        # API client
-│   │   ├── styles/          # CSS files
-│   │   └── App.jsx          # Main app
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-│
-├── backend/                  # FastAPI application
+├── backend/
 │   ├── app/
-│   │   ├── main.py          # FastAPI entry point
-│   │   ├── config.py        # Settings
+│   │   ├── main.py              # FastAPI app, lifespan, CORS, router registration
+│   │   ├── config.py            # Pydantic settings (env-driven)
 │   │   ├── database/
-│   │   │   └── db.py        # MongoDB connection
-│   │   ├── models/          # Pydantic models
-│   │   ├── routes/          # API endpoints
-│   │   ├── services/        # Business logic
-│   │   └── middleware/      # Custom middleware
+│   │   │   └── db.py            # Motor client, connection pool, index creation
+│   │   ├── models/              # Pydantic request/response schemas
+│   │   │   ├── analytics.py     # Typed analytics response models
+│   │   │   ├── exam.py          # Exam, Subject, Chapter, Question models
+│   │   │   ├── quiz.py          # Session, Answer, Result models
+│   │   │   └── user.py          # User models
+│   │   ├── routes/              # Thin API layer — delegates to services
+│   │   │   ├── analytics.py     # 15 analytics endpoints
+│   │   │   ├── exams.py         # Exam & Subject listing
+│   │   │   ├── subjects.py      # Subject & Chapter listing
+│   │   │   ├── quiz.py          # Quiz session lifecycle
+│   │   │   ├── users.py         # User management
+│   │   │   └── admin.py         # Seeding & system stats
+│   │   └── services/            # Business logic & DB queries
+│   │       ├── analytics_service.py  # MongoDB aggregation pipelines
+│   │       ├── quiz_service.py       # Quiz session management
+│   │       ├── exam_service.py       # Content retrieval
+│   │       ├── user_service.py       # User operations
+│   │       └── data_seeder.py        # Realistic demo data generator
+│   ├── tests/                   # Pytest test suite
 │   ├── requirements.txt
-│   ├── .env
-│   └── README.md
+│   └── .env                     # Environment config (not committed)
 │
-└── README.md                 # This file
+├── frontend/
+│   └── src/
+│       ├── pages/               # Route-level components
+│       │   ├── ExamList.jsx
+│       │   ├── SubjectList.jsx
+│       │   ├── ChapterList.jsx
+│       │   ├── Quiz.jsx
+│       │   ├── Results.jsx
+│       │   ├── Analytics.jsx
+│       │   └── Home.jsx
+│       ├── components/          # Reusable UI components
+│       ├── services/
+│       │   └── api.js           # Axios client with interceptors
+│       ├── hooks/               # Custom React hooks
+│       ├── context/             # React context providers
+│       ├── utils/               # Utility functions
+│       └── styles/              # CSS per component
+│
+├── docker-compose.yml
+└── README.md
 ```
 
-## Installation & Setup
+## Getting Started
 
 ### Prerequisites
 - Python 3.11+
 - Node.js 18+
-- MongoDB 5.0+ (running locally on localhost:27017)
+- MongoDB Atlas account (or local MongoDB 5.0+)
 
-### Backend Setup
+### Backend
 
 ```bash
 cd backend
-
-# Create virtual environment (optional)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
 
-# Configure environment
-# .env file is pre-configured for local development
+# Configure .env
+echo "MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/quiz_app" > .env
+echo "DATABASE_NAME=quiz_app" >> .env
 
-# Start backend server
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+# Start server
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Server runs on http://localhost:8000
-- API docs: http://localhost:8000/docs
-- Health check: http://localhost:8000/health
+API available at `http://localhost:8000`
+- Interactive docs: `http://localhost:8000/docs`
+- Health check: `http://localhost:8000/health`
 
-### Frontend Setup
+### Frontend
 
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
 
-Frontend runs on http://localhost:5173
+Frontend at `http://localhost:5173`
 
-### Seed Database (Optional)
-
-The backend includes dummy data generation. To populate MongoDB:
+### Seed Demo Data
 
 ```bash
-curl -X POST http://localhost:8000/api/admin/seed-data
+curl -X POST http://localhost:8000/api/admin/seed-data \
+  -H "X-Admin-Key: skillbytes-admin-2024"
 ```
 
-This creates:
-- 100 users
-- 10 exams
-- 50 subjects
-- 200 chapters
-- 2000 questions
-- 5000 quiz sessions
-- 50000+ responses
+## API Reference
 
-## API Endpoints
+### Exams & Navigation
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/exams` | List all exams |
+| GET | `/api/exams/{examId}/subjects` | List subjects for an exam |
+| GET | `/api/subjects/{subjectId}/chapters` | List chapters for a subject |
 
-### Users
-- `GET /api/users` - Get or create user
-- `POST /api/users` - Create new user
-
-### Exams
-- `GET /api/exams` - List all exams
-- `GET /api/exams/{examId}/subjects` - Get subjects for exam
-- `GET /api/subjects/{subjectId}/chapters` - Get chapters for subject
-
-### Quiz
-- `POST /api/quiz/start` - Start new quiz session
-- `GET /api/quiz/session/{sessionId}` - Get current question
-- `POST /api/quiz/answer` - Submit answer
-- `POST /api/quiz/session/{sessionId}/complete` - Complete session
-- `GET /api/quiz/session/{sessionId}/results` - Get results
+### Quiz Engine
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/quiz/start` | Start new session (`X-User-ID` header required) |
+| GET | `/api/quiz/session/{id}` | Get current question |
+| POST | `/api/quiz/answer` | Submit answer + response time |
+| POST | `/api/quiz/session/{id}/complete` | Mark session complete |
+| GET | `/api/quiz/session/{id}/results` | Final score & summary |
+| GET | `/api/quiz/session/{id}/responses` | Full answer review with explanations |
+| POST | `/api/quiz/session/{id}/interrupt` | Record mid-quiz abandonment |
 
 ### Analytics
-- `GET /api/analytics/daily-active-users` - DAU metric
-- `GET /api/analytics/weekly-active-users` - WAU metric
-- `GET /api/analytics/questions-served` - Total questions
-- `GET /api/analytics/questions-answered` - Total responses
-- `GET /api/analytics/avg-response-time` - Response duration
-- `GET /api/analytics/completion-rate` - Session completion %
-- `GET /api/analytics/drop-off` - Drop-off analysis
-- `GET /api/analytics/peak-hours` - Peak activity hour
-- `GET /api/analytics/avg-questions-per-session` - Avg questions
-
-### Admin
-- `POST /api/admin/seed-data` - Generate dummy data
-- `GET /api/admin/stats` - System statistics
-
-## Usage
-
-1. **Open http://localhost:5173 in your browser**
-
-2. **Home Page**: View dashboard stats
-
-3. **Select Exam**: Browse available exams
-
-4. **Select Subject**: Choose a subject from exam
-
-5. **Select Chapter**: Pick a chapter from subject
-
-6. **Take Quiz**: Answer one question at a time
-   - Select an option
-   - Click "Next Question"
-   - Progress tracked with progress bar
-
-7. **View Results**: See score, percentage, breakdown
-
-8. **Analytics**: View 9+ engagement metrics
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/analytics/overview` | **All KPIs in one call** |
+| GET | `/api/analytics/daily-active-users` | DAU (IST, configurable window) |
+| GET | `/api/analytics/weekly-active-users` | WAU |
+| GET | `/api/analytics/completion-rate` | Session completion % |
+| GET | `/api/analytics/drop-off` | Drop-off funnel by question number |
+| GET | `/api/analytics/peak-hours` | Activity by hour of day (IST) |
+| GET | `/api/analytics/subject-accuracy` | Accuracy ranked by subject |
+| GET | `/api/analytics/chapter-accuracy` | Accuracy ranked by chapter |
+| GET | `/api/analytics/avg-response-time` | Mean / median / p95 response time |
+| GET | `/api/analytics/questions-served` | Total + today + avg per session |
+| GET | `/api/analytics/difficulty-served` | Breakdown by easy/medium/hard |
 
 ## Database Schema
 
-### Collections
+### Collections & Indexes
 
 **users**
-```javascript
-{
-  user_id: "usr_xxx",
-  name: "John Doe",
-  email: "john@example.com",
-  created_at: ISODate,
-  last_active: ISODate
-}
+```js
+{ user_id, name, email, created_at, last_active }
+// Index: user_id (unique)
+```
+
+**exams / subjects / chapters / questions**
+```js
+// Hierarchical: exam_id → subject_id → chapter_id → question_id
+// Each level has a unique index; foreign keys have secondary indexes
+// questions also indexed on: chapter_id, difficulty
 ```
 
 **quiz_sessions**
-```javascript
+```js
 {
-  session_id: "session_xxx",
-  user_id: "usr_xxx",
-  chapter_id: "ch_xxx",
-  status: "completed|in_progress|abandoned",
-  total_questions: 10,
-  correct_answers: 7,
-  score: 70,
-  started_at: ISODate,
-  completed_at: ISODate
+  session_id,   // unique
+  user_id,      // → users
+  chapter_id,   // → chapters
+  status,       // in_progress | completed | interrupted | abandoned
+  total_questions, correct_answers, score,
+  current_question_index,
+  answers: [],  // array of submitted answer letters
+  started_at, completed_at, created_at
 }
+// Compound indexes: (user_id, created_at), (created_at), status
 ```
 
 **responses**
-```javascript
+```js
 {
-  response_id: "resp_xxx",
-  session_id: "session_xxx",
-  question_id: "q_xxx",
-  user_answer: "B",
-  is_correct: true,
-  question_shown_at: ISODate,
-  answer_submitted_at: ISODate,
-  response_duration_ms: 5234
+  response_id,           // unique
+  session_id,            // → quiz_sessions
+  question_id,           // → questions
+  user_answer,           // option letter or text
+  is_correct,            // boolean — pre-computed at submission
+  answer_submitted_at,   // timestamp
+  response_duration_ms   // client-measured response time
 }
+// Compound indexes: (session_id, is_correct), (answer_submitted_at)
 ```
 
-See backend README for complete schema.
+## Analytics Design
 
-## Key Features Explained
+All analytics use **MongoDB aggregation pipelines** — no application-level data loading.
 
-### One-Question-At-A-Time Flow
-- Questions displayed individually
-- User selects option and clicks Next
-- Maintains focus and reduces cognitive load
-- Perfect for mobile/chat-like experience
-
-### Quiz Timing
-- `question_shown_at`: When question was displayed
-- `answer_submitted_at`: When user submitted answer
-- `response_duration_ms`: Calculated difference
-- Enables analysis of response patterns
-
-### Analytics Metrics
-1. **Daily Active Users**: Unique users taking quizzes today
-2. **Weekly Active Users**: Unique users in last 7 days
-3. **Questions Served**: Total questions displayed
-4. **Questions Answered**: Total responses submitted
-5. **Avg Response Time**: Mean response duration
-6. **Completion Rate**: % sessions completed
-7. **Drop-off Analysis**: % who abandon at each question
-8. **Peak Activity Hours**: Hour with most activity
-9. **Avg Questions/Session**: Average questions per session
-
-### No Authentication
-- Anonymous user creation
-- Session-based via localStorage
-- User ID stored and reused
-- No login/signup required
-
-## Development Notes
-
-### Architecture Decisions
-
-1. **Async/Await**: Motor provides async MongoDB driver for better concurrency
-2. **Service Layer**: Business logic separated from routes for testability
-3. **Pydantic Models**: Strict type validation for all API requests/responses
-4. **CORS Enabled**: Frontend can call backend from different ports
-5. **Error Handling**: All endpoints include comprehensive error handling
-6. **Logging**: Structured logging throughout for debugging
-
-### Performance Considerations
-
-- MongoDB indexes created on all foreign keys
-- Pagination support for list endpoints
-- Real-time analytics calculation (pre-aggregation recommended for scale)
-- Async operations prevent blocking on DB queries
-- Frontend caching via React hooks
-
-### Browser Compatibility
-
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile browsers supported
-- Requires JavaScript enabled
-
-## Common Issues
-
-### "Connection refused" on Backend
-- Ensure MongoDB is running on localhost:27017
-- Check .env MONGODB_URI setting
-- Verify port 8000 is not in use
-
-### "Cannot GET /api/exams"
-- Backend might not be fully started
-- Check logs: `tail -f /tmp/backend.log`
-- Verify CORS is configured correctly
-
-### Quiz Questions Not Loading
-- MongoDB may not be seeded yet
-- Run `curl -X POST http://localhost:8000/api/admin/seed-data`
-- Check MongoDB has quiz_sessions and responses collections
-
-### Frontend CORS Errors
-- Verify frontend URL in backend ALLOWED_ORIGINS
-- Check .env files have correct URLs
-- Restart backend after .env changes
+Key design choices:
+- **IST timezone** applied via `timezone: "+05:30"` in all date groupings
+- **`$addToSet`** used for DAU/WAU to deduplicate users within time windows
+- **`$lookup` chains** join responses → questions → chapters → subjects → exams in a single pipeline pass
+- **Drop-off funnel** built with `$group on current_question_index` (pure DB computation)
+- **`/overview` endpoint** aggregates all header KPIs in one database round-trip
 
 ## Deployment
 
-### Backend (Heroku/Railway/Render)
-- Set environment variables: MONGODB_URI
-- Use `gunicorn app.main:app`
-- Or use Procfile with uvicorn
+### Backend (Render / Railway)
+1. Set environment variable `MONGODB_URI` to your Atlas connection string
+2. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
-### Frontend (Vercel/Netlify)
-- Build: `npm run build`
-- Deploy `dist/` directory
-- Set VITE_API_URL to backend URL
-
-## Testing
-
-The application includes:
-- Pydantic models for request validation
-- Async service methods with error handling
-- Comprehensive response formats
-- Mock data seeding for testing
-
-## Contributing
-
-1. Follow existing code style
-2. Add tests for new endpoints
-3. Update documentation
-4. Maintain async/await patterns
-5. Keep routes thin, logic in services
-
-## License
-
-MIT License
-
-## Support
-
-For issues or questions:
-1. Check the Common Issues section
-2. Review API documentation at /docs
-3. Check backend logs in `/tmp/backend.log`
-4. Verify MongoDB connectivity
+### Frontend (Vercel / Netlify)
+1. Set `VITE_API_URL` to your deployed backend URL
+2. Build command: `npm run build` → deploy `dist/`
 
 ---
 
-**Status**: Production-ready for demonstration
-**Last Updated**: 2024
+**Stack**: FastAPI · React 18 · MongoDB Atlas · Motor · Pydantic v2 · Recharts  
+**Environment**: Python 3.11+ · Node 18+

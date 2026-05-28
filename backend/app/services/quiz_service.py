@@ -75,7 +75,7 @@ class QuizService:
         }
     
     @staticmethod
-    async def submit_answer(session_id: str, question_id: str, user_answer: str) -> dict:
+    async def submit_answer(session_id: str, question_id: str, user_answer: str, response_duration_ms: int = 5000) -> dict:
         """Submit answer and move to next question"""
         db = await get_db()
         
@@ -109,7 +109,7 @@ class QuizService:
             "is_correct": is_correct,
             "question_shown_at": current_time,  # Should be from GET, but recording here
             "answer_submitted_at": current_time,
-            "response_duration_ms": 5000  # Default, would be calculated on frontend
+            "response_duration_ms": response_duration_ms  # Save calculated frontend time
         }
         
         await db["responses"].insert_one(response_data)
@@ -152,7 +152,7 @@ class QuizService:
             "correct_answer": question["correct_answer"],
             "has_next_question": has_next,
             "current_score": current_score,
-            "response_time_ms": 5000,
+            "response_time_ms": response_duration_ms,
             "current_question": new_index,
             "total_questions": total_questions
         }
@@ -166,20 +166,26 @@ class QuizService:
         if not session:
             raise ValueError("Session not found")
         
+        # Calculate final score based on correct answers so far
+        total_questions = session.get("total_questions", 10)
+        correct_answers = session.get("correct_answers", 0)
+        score = int((correct_answers / total_questions) * 100) if total_questions > 0 else 0
+        
         # Update session
         await db["quiz_sessions"].update_one(
             {"session_id": session_id},
             {"$set": {
                 "status": "completed",
-                "completed_at": datetime.utcnow()
+                "completed_at": datetime.utcnow(),
+                "score": score
             }}
         )
         
         return {
             "session_id": session_id,
-            "total_questions": session["total_questions"],
-            "correct_answers": session["correct_answers"],
-            "score": session.get("score", 0)
+            "total_questions": total_questions,
+            "correct_answers": correct_answers,
+            "score": score
         }
     
     @staticmethod
@@ -229,32 +235,79 @@ class QuizService:
     
     @staticmethod
     async def get_responses(session_id: str) -> list:
-        """Get all detailed responses for a quiz session"""
+        """Get all detailed responses for a quiz session (returns all chapter questions to support full reviews)"""
         db = await get_db()
         
         session = await db["quiz_sessions"].find_one({"session_id": session_id})
         if not session:
             raise ValueError("Session not found")
         
-        # Get responses with question details
-        responses = await db["responses"].find(
+        # 1. Fetch all questions for this chapter in order
+        questions = await db["questions"].find(
+            {"chapter_id": session["chapter_id"]}
+        ).to_list(length=None)
+        
+        # 2. Fetch all user responses for this session
+        responses_list = await db["responses"].find(
             {"session_id": session_id}
         ).to_list(length=None)
         
-        # Format responses with question text
+        # Create a dictionary for rapid question-to-response mapping
+        resp_dict = {resp["question_id"]: resp for resp in responses_list}
+        
+        # 3. Build the full sequence of questions, mapping active responses or skipped placeholders
         formatted_responses = []
-        for idx, resp in enumerate(responses):
-            question = await db["questions"].find_one({"question_id": resp["question_id"]})
-            correct_answer = question.get("correct_answer", "Unknown") if question else "Unknown"
+        for idx, question in enumerate(questions):
+            qid = question["question_id"]
+            resp = resp_dict.get(qid)
             
-            formatted_responses.append({
-                "question_number": idx + 1,
-                "question_text": question["question_text"] if question else "",
-                "options": question["options"] if question else [],
-                "user_answer": resp["user_answer"],
-                "correct_answer": correct_answer,
-                "is_correct": resp["is_correct"],
-                "response_duration_ms": resp.get("response_duration_ms", 0)
-            })
+            if resp:
+                # Question was answered
+                formatted_responses.append({
+                    "question_id": qid,
+                    "question_number": idx + 1,
+                    "question_text": question["question_text"],
+                    "options": question["options"],
+                    "user_answer": resp["user_answer"],
+                    "correct_answer": question.get("correct_answer", "Unknown"),
+                    "is_correct": resp["is_correct"],
+                    "response_duration_ms": resp.get("response_duration_ms", 0),
+                    "explanation": question.get("explanation")
+                })
+            else:
+                # Question was skipped or never reached (aborted quiz)
+                formatted_responses.append({
+                    "question_id": qid,
+                    "question_number": idx + 1,
+                    "question_text": question["question_text"],
+                    "options": question["options"],
+                    "user_answer": None,
+                    "correct_answer": question.get("correct_answer", "Unknown"),
+                    "is_correct": False,
+                    "response_duration_ms": 0,
+                    "explanation": question.get("explanation")
+                })
         
         return formatted_responses
+
+    @staticmethod
+    async def interrupt_quiz(session_id: str) -> dict:
+        """Mark quiz session status as interrupted"""
+        db = await get_db()
+        
+        session = await db["quiz_sessions"].find_one({"session_id": session_id})
+        if not session:
+            raise ValueError("Session not found")
+        
+        await db["quiz_sessions"].update_one(
+            {"session_id": session_id},
+            {"$set": {
+                "status": "interrupted",
+                "completed_at": datetime.utcnow()
+            }}
+        )
+        logger.info(f"✓ Quiz session interrupted: {session_id}")
+        return {
+            "session_id": session_id,
+            "status": "interrupted"
+        }

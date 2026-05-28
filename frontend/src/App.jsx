@@ -21,7 +21,7 @@ function App() {
         let userId = localStorage.getItem('user_id');
         if (!userId) {
           const response = await api.getOrCreateUser();
-          userId = response.data.user_id;
+          userId = response?.data?.user_id;
           localStorage.setItem('user_id', userId);
         }
       } catch (error) {

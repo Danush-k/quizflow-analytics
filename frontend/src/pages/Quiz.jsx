@@ -22,6 +22,7 @@ function Quiz() {
   // New WhatsApp-style Quiz Start Confirmation State
   const [chapterInfo, setChapterInfo] = useState(null);
   const [showStartModal, setShowStartModal] = useState(true);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // High-fidelity tracking states
   const [tracking, setTracking] = useState({});
@@ -78,7 +79,19 @@ function Quiz() {
       setQuestions(qRes.data || []);
       
       // Attempt to retrieve chapter metadata
-      const subjectId = chapterId.split('_')[0]; // Subject prefix helper
+      let subjectId = '';
+      if (chapterId && chapterId.startsWith('chap_')) {
+        const parts = chapterId.split('_');
+        if (parts[3] === 'jee' && parts[4] === 'main') {
+          subjectId = parts.slice(1, 6).join('_');
+        } else if (parts[3] === 'neet') {
+          subjectId = parts.slice(1, 5).join('_');
+        } else {
+          // General fallback
+          subjectId = parts.slice(1, parts.length - 1).join('_');
+        }
+      }
+
       if (subjectId) {
         try {
           const chaptersRes = await api.getChapters(subjectId);
@@ -140,6 +153,86 @@ function Quiz() {
     } catch (err) {
       console.error('Error starting quiz session:', err);
       setError('Could not start quiz session. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ─── EXAM-SESSION PROTECTION FLOW (Accidental Exits, reloads, browser backs) ─
+  // 1. Intercept Reload / Tab Close (beforeunload)
+  useEffect(() => {
+    if (!sessionId) return;
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = 'Your test is still in progress. Are you sure you want to leave?';
+      return e.returnValue;
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [sessionId]);
+
+  // 2. Intercept Browser Back Button / History navigation (popstate)
+  useEffect(() => {
+    if (!sessionId) return;
+    
+    // Push initial dummy state to let us handle popstate back clicks locally
+    window.history.pushState(null, '', window.location.href);
+
+    const handlePopState = (e) => {
+      // Re-push state immediately to block back transition in browser history
+      window.history.pushState(null, '', window.location.href);
+      setShowExitConfirm(true);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [sessionId]);
+
+  // Handle explicit exit confirmation from custom popup
+  const handleExitQuiz = async () => {
+    try {
+      setLoading(true);
+      
+      // 1. Submit current answers recorded so far to the backend (Autosave)
+      let finalTracking = { ...tracking };
+      if (currentQId) {
+        const now = Date.now();
+        const entered = tracking[currentQId]?.questionShownTimestamp;
+        const finalTimeSpent = entered > 0 ? (now - entered) : 0;
+        
+        finalTracking = {
+          ...tracking,
+          [currentQId]: {
+            ...tracking[currentQId],
+            responseDuration: (tracking[currentQId]?.responseDuration || 0) + finalTimeSpent,
+            questionShownTimestamp: 0
+          }
+        };
+      }
+
+      for (const [qid, ansLetter] of Object.entries(answers)) {
+        const duration = finalTracking[qid]?.responseDuration || 3000;
+        await api.submitAnswer(sessionId, qid, ansLetter, duration);
+      }
+
+      // 2. Interrupt and evaluate the quiz session on the backend (mark as dropped)
+      await api.interruptQuiz(sessionId);
+
+      // 3. Store entire tracking session data in localStorage for results screen to use
+      localStorage.setItem(`quiz_session_${sessionId}_tracking`, JSON.stringify({
+        tracking: finalTracking,
+        timeLeft,
+        totalDuration: 600,
+        chapterName: chapterInfo?.name || chapterId
+      }));
+
+      // 4. Reset protection state and navigate directly to the Results/Review page
+      setShowExitConfirm(false);
+      navigate(`/results/${sessionId}`);
+    } catch (err) {
+      console.error('Error exiting quiz session protection:', err);
+      // Fallback navigate to exams index
+      navigate('/exams');
     } finally {
       setLoading(false);
     }
@@ -605,6 +698,39 @@ function Quiz() {
               </button>
               <button className="btn-modal-confirm" onClick={handleSubmitQuiz}>
                 Submit Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Exit Confirmation Protection Modal */}
+      {showExitConfirm && (
+        <div className="wa-modal-overlay">
+          <div className="wa-confirm-card wa-exit-confirm-card">
+            <div className="wa-confirm-header wa-exit-header">
+              <span className="wa-confirm-logo wa-exit-logo">⚠️</span>
+              <div>
+                <h3>Accidental Exit Warning</h3>
+                <p>Test session in progress</p>
+              </div>
+            </div>
+
+            <div className="wa-confirm-body wa-exit-body">
+              <p className="wa-exit-message-main">
+                Your test is still in progress.<br />
+                Are you sure you want to leave?
+              </p>
+              <p className="wa-exit-message-sub">
+                * Leaving will autosave your progress, evaluate your answered questions, and show your detailed review results.
+              </p>
+            </div>
+
+            <div className="wa-confirm-actions wa-exit-actions">
+              <button className="wa-btn-cancel wa-btn-exit-test" onClick={handleExitQuiz}>
+                Exit Test
+              </button>
+              <button className="wa-btn-start wa-btn-continue-test" onClick={() => setShowExitConfirm(false)}>
+                Continue Test
               </button>
             </div>
           </div>

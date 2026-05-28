@@ -1,30 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../services/api';
 import '../styles/Home.css';
 
 function Home() {
   const navigate = useNavigate();
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
-    try {
-      setLoading(true);
-      const response = await api.getStats();
-      setStats(response.data);
-    } catch (err) {
-      console.error('Error fetching stats:', err);
-      setError('Failed to load statistics');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleStartQuiz = () => {
     navigate('/exams');
@@ -35,84 +14,73 @@ function Home() {
       <div className="hero-section">
         <div className="hero-content">
           <h1>Welcome to Quiz App</h1>
-          <p>Master your knowledge with our interactive WhatsApp-style quiz platform</p>
+          <p>Master your knowledge with our interactive WhatsApp-style quiz platform. Experience lightning-fast answering, real-time grading, and clean visual diagnostics.</p>
           <button className="cta-button" onClick={handleStartQuiz}>
             Start Quiz
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </button>
         </div>
-        <div className="hero-emoji">📱</div>
+        <div className="hero-preview-col">
+          <div className="wa-mock-quiz-card">
+            <div className="wa-mock-q-header">
+              <span className="wa-mock-q-badge">QUESTION 1</span>
+              <span className="wa-mock-q-diff">Difficulty: Medium</span>
+            </div>
+            <p className="wa-mock-question-text">
+              What is the SI unit of force?
+            </p>
+            <div className="wa-mock-options-list">
+              <div className="wa-mock-opt-item opt-correct">
+                <span className="wa-mock-opt-bullet">A</span>
+                <span>Newton</span>
+              </div>
+              <div className="wa-mock-opt-item">
+                <span className="wa-mock-opt-bullet">B</span>
+                <span>Pascal</span>
+              </div>
+              <div className="wa-mock-opt-item">
+                <span className="wa-mock-opt-bullet">C</span>
+                <span>Joule</span>
+              </div>
+              <div className="wa-mock-opt-item">
+                <span className="wa-mock-opt-bullet">D</span>
+                <span>Watt</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="container">
-        {loading ? (
-          <div className="loading-skeleton">
-            <div className="skeleton-card"></div>
-            <div className="skeleton-card"></div>
-            <div className="skeleton-card"></div>
-          </div>
-        ) : error ? (
-          <div className="error">{error}</div>
-        ) : stats ? (
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-icon">👥</div>
-              <div className="stat-content">
-                <p className="stat-label">Total Users</p>
-                <p className="stat-value">{stats.total_users || 0}</p>
-              </div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">📝</div>
-              <div className="stat-content">
-                <p className="stat-label">Total Questions</p>
-                <p className="stat-value">{stats.total_questions || 0}</p>
-              </div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">✅</div>
-              <div className="stat-content">
-                <p className="stat-label">Total Sessions</p>
-                <p className="stat-value">{stats.total_sessions || 0}</p>
-              </div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">📊</div>
-              <div className="stat-content">
-                <p className="stat-label">Total Responses</p>
-                <p className="stat-value">{stats.total_responses || 0}</p>
-              </div>
-            </div>
-          </div>
-        ) : null}
-
         <div className="features-section">
           <h2>Why Choose Our Quiz App?</h2>
+          <p className="features-sub">Engineered to optimize your learning workflow through micro-active engagement.</p>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">⚡</div>
+              <div className="feature-icon-wrap">⚡</div>
               <h3>Lightning Fast</h3>
-              <p>One question at a time for better focus and engagement</p>
+              <p>One question at a time for better focus, reducing test anxiety and improving cognitive retention.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">📈</div>
+              <div className="feature-icon-wrap">📈</div>
               <h3>Track Progress</h3>
-              <p>View detailed analytics and track your improvement</p>
+              <p>Explore high-fidelity visual stats grids and detailed performance analytics in real-time.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">🎯</div>
+              <div className="feature-icon-wrap">🎯</div>
               <h3>Comprehensive</h3>
-              <p>Multiple exams, subjects, and chapters to explore</p>
+              <p>Dive deep into custom exams, multiple subjects, and curated chapters crafted by educational experts.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">📱</div>
+              <div className="feature-icon-wrap">📱</div>
               <h3>Mobile Friendly</h3>
-              <p>Optimized for both desktop and mobile devices</p>
+              <p>Enjoy a responsive design optimized for seamless practice on desktop, tablets, and smartphones.</p>
             </div>
           </div>
         </div>
