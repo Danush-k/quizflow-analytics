@@ -89,8 +89,15 @@ class QuizService:
         if not question:
             raise ValueError("Question not found")
         
-        # Check if answer is correct
-        is_correct = user_answer == question["correct_answer"]
+        # Check if answer is correct (map A/B/C/D option letters to strings)
+        is_correct = False
+        letter_to_idx = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
+        if user_answer in letter_to_idx:
+            idx = letter_to_idx[user_answer]
+            if idx < len(question["options"]):
+                is_correct = question["options"][idx] == question["correct_answer"]
+        else:
+            is_correct = user_answer == question["correct_answer"]
         
         # Record response with timestamps
         current_time = datetime.utcnow()
@@ -197,11 +204,14 @@ class QuizService:
         formatted_responses = []
         for idx, resp in enumerate(responses):
             question = await db["questions"].find_one({"question_id": resp["question_id"]})
+            correct_answer = question.get("correct_answer", "Unknown") if question else "Unknown"
+            
             formatted_responses.append({
                 "question_number": idx + 1,
                 "question_text": question["question_text"] if question else "",
+                "options": question["options"] if question else [],
                 "user_answer": resp["user_answer"],
-                "correct_answer": resp["correct_answer"],
+                "correct_answer": correct_answer,
                 "is_correct": resp["is_correct"],
                 "response_time_ms": resp.get("response_duration_ms", 0)
             })
@@ -216,3 +226,35 @@ class QuizService:
             "time_taken_ms": int((session.get("completed_at", datetime.utcnow()) - session["started_at"]).total_seconds() * 1000),
             "responses": formatted_responses
         }
+    
+    @staticmethod
+    async def get_responses(session_id: str) -> list:
+        """Get all detailed responses for a quiz session"""
+        db = await get_db()
+        
+        session = await db["quiz_sessions"].find_one({"session_id": session_id})
+        if not session:
+            raise ValueError("Session not found")
+        
+        # Get responses with question details
+        responses = await db["responses"].find(
+            {"session_id": session_id}
+        ).to_list(length=None)
+        
+        # Format responses with question text
+        formatted_responses = []
+        for idx, resp in enumerate(responses):
+            question = await db["questions"].find_one({"question_id": resp["question_id"]})
+            correct_answer = question.get("correct_answer", "Unknown") if question else "Unknown"
+            
+            formatted_responses.append({
+                "question_number": idx + 1,
+                "question_text": question["question_text"] if question else "",
+                "options": question["options"] if question else [],
+                "user_answer": resp["user_answer"],
+                "correct_answer": correct_answer,
+                "is_correct": resp["is_correct"],
+                "response_duration_ms": resp.get("response_duration_ms", 0)
+            })
+        
+        return formatted_responses

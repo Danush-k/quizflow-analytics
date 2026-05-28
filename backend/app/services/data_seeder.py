@@ -117,35 +117,187 @@ class DataSeeder:
     
     @staticmethod
     async def _seed_questions(db, chapters) -> int:
-        """Create 2000 questions (10 per chapter)"""
+        """Create 2000 questions (10 per chapter) with realistic content"""
         count = 0
         
+        # Question bank organized by subject
+        question_bank = {
+            "Physics": [
+                {
+                    "text": "What is the SI unit of force?",
+                    "options": ["Newton", "Joule", "Pascal", "Watt"],
+                    "correct": "Newton"
+                },
+                {
+                    "text": "Which law of motion states F = ma?",
+                    "options": ["First Law", "Second Law", "Third Law", "Law of Inertia"],
+                    "correct": "Second Law"
+                },
+                {
+                    "text": "What is the speed of light in vacuum?",
+                    "options": ["3×10^7 m/s", "3×10^8 m/s", "3×10^9 m/s", "3×10^6 m/s"],
+                    "correct": "3×10^8 m/s"
+                },
+                {
+                    "text": "Who discovered the law of universal gravitation?",
+                    "options": ["Galileo", "Newton", "Kepler", "Einstein"],
+                    "correct": "Newton"
+                },
+                {
+                    "text": "What is the formula for kinetic energy?",
+                    "options": ["mgh", "½mv²", "mg", "mv"],
+                    "correct": "½mv²"
+                },
+            ],
+            "Chemistry": [
+                {
+                    "text": "What is the atomic number of Carbon?",
+                    "options": ["4", "6", "8", "12"],
+                    "correct": "6"
+                },
+                {
+                    "text": "What is the chemical formula for table salt?",
+                    "options": ["NaCl", "KCl", "CaCl2", "NaOH"],
+                    "correct": "NaCl"
+                },
+                {
+                    "text": "Which gas is most abundant in Earth's atmosphere?",
+                    "options": ["Oxygen", "Hydrogen", "Nitrogen", "Carbon Dioxide"],
+                    "correct": "Nitrogen"
+                },
+                {
+                    "text": "What is the pH of a neutral solution?",
+                    "options": ["0", "7", "14", "1"],
+                    "correct": "7"
+                },
+                {
+                    "text": "Which element has the symbol 'Au'?",
+                    "options": ["Silver", "Gold", "Aluminum", "Argon"],
+                    "correct": "Gold"
+                },
+            ],
+            "Biology": [
+                {
+                    "text": "What is the powerhouse of the cell?",
+                    "options": ["Nucleus", "Mitochondria", "Ribosome", "Vacuole"],
+                    "correct": "Mitochondria"
+                },
+                {
+                    "text": "How many chambers does the human heart have?",
+                    "options": ["2", "3", "4", "5"],
+                    "correct": "4"
+                },
+                {
+                    "text": "What is the basic unit of life?",
+                    "options": ["Atom", "Molecule", "Cell", "Tissue"],
+                    "correct": "Cell"
+                },
+                {
+                    "text": "Which organelle is responsible for protein synthesis?",
+                    "options": ["Mitochondria", "Golgi Apparatus", "Ribosome", "Lysosome"],
+                    "correct": "Ribosome"
+                },
+                {
+                    "text": "What is the process by which plants make their own food?",
+                    "options": ["Respiration", "Photosynthesis", "Fermentation", "Digestion"],
+                    "correct": "Photosynthesis"
+                },
+            ],
+            "Mathematics": [
+                {
+                    "text": "What is the value of π (pi)?",
+                    "options": ["3.12", "3.14", "3.16", "3.18"],
+                    "correct": "3.14"
+                },
+                {
+                    "text": "What is the derivative of x² with respect to x?",
+                    "options": ["x", "2x", "2", "x²"],
+                    "correct": "2x"
+                },
+                {
+                    "text": "What is the solution to 2x + 3 = 7?",
+                    "options": ["1", "2", "3", "4"],
+                    "correct": "2"
+                },
+                {
+                    "text": "What is the area of a circle with radius 5?",
+                    "options": ["25π", "10π", "5π", "100π"],
+                    "correct": "25π"
+                },
+                {
+                    "text": "What is 25% of 200?",
+                    "options": ["25", "50", "75", "100"],
+                    "correct": "50"
+                },
+            ],
+            "English": [
+                {
+                    "text": "Which is a noun?",
+                    "options": ["Run", "Happy", "Book", "Quickly"],
+                    "correct": "Book"
+                },
+                {
+                    "text": "What is the past tense of 'go'?",
+                    "options": ["Goed", "Going", "Went", "Goes"],
+                    "correct": "Went"
+                },
+                {
+                    "text": "Which word is a verb?",
+                    "options": ["Blue", "Jump", "Quick", "Beautiful"],
+                    "correct": "Jump"
+                },
+                {
+                    "text": "What is the plural of 'child'?",
+                    "options": ["Childs", "Children", "Childes", "Chilren"],
+                    "correct": "Children"
+                },
+                {
+                    "text": "Which sentence is grammatically correct?",
+                    "options": ["She go to school", "She goes to school", "She going to school", "She gone to school"],
+                    "correct": "She goes to school"
+                },
+            ]
+        }
+        
         for chapter in chapters:
+            # Determine subject from chapter name
+            subject_match = None
+            for subject in question_bank.keys():
+                if subject.lower() in chapter['name'].lower():
+                    subject_match = subject
+                    break
+            
+            if not subject_match:
+                subject_match = "Mathematics"  # Default fallback
+            
+            questions = question_bank[subject_match]
+            
             for q_num in range(10):
                 question_id = f"q_{chapter['chapter_id']}_{q_num:02d}"
+                q_template = questions[q_num % len(questions)]
+                
+                # Shuffle options so correct answer isn't always first
+                options = q_template["options"].copy()
+                random.shuffle(options)
+                
                 question = {
                     "question_id": question_id,
                     "chapter_id": chapter["chapter_id"],
-                    "question_text": f"Question {q_num + 1}: What is the answer to this question about {chapter['name']}?",
-                    "options": [
-                        f"Option A",
-                        f"Option B",
-                        f"Option C",
-                        f"Option D"
-                    ],
-                    "correct_answer": f"Option {random.choice(['A', 'B', 'C', 'D'])}",
+                    "question_text": q_template["text"],
+                    "options": options,
+                    "correct_answer": q_template["correct"],
                     "difficulty": random.choice(["easy", "medium", "hard"]),
                     "created_at": datetime.utcnow()
                 }
                 await db["questions"].insert_one(question)
                 count += 1
         
-        logger.info(f"✓ Created {count} questions")
+        logger.info(f"✓ Created {count} questions with realistic content")
         return count
     
     @staticmethod
-    async def _seed_users(db, count: int = 100) -> list:
-        """Create 100 users"""
+    async def _seed_users(db, count: int = 10) -> list:
+        """Create 10 users for light testing"""
         users = []
         
         for i in range(count):
@@ -167,13 +319,13 @@ class DataSeeder:
     
     @staticmethod
     async def _seed_quiz_sessions_and_responses(db, users, chapters) -> int:
-        """Create 5000 quiz sessions with responses"""
+        """Create a few quiz sessions with responses"""
         session_count = 0
         response_count = 0
         
         for user in users:
-            # Each user takes ~50 quizzes
-            for _ in range(50):
+            # Each user takes 2 quizzes
+            for _ in range(2):
                 chapter = random.choice(chapters)
                 questions = await db["questions"].find(
                     {"chapter_id": chapter["chapter_id"]}
