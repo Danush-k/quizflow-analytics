@@ -4,41 +4,43 @@ import { api } from '../services/api';
 import '../styles/List.css';
 
 // ─── Subject-Specific Icons ──────────────────────────────────────────────────
-const IconPhysics = ({ size = 28 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+const IconPhysics = ({ size = 48 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#128C7E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', filter: 'drop-shadow(0 2px 4px rgba(18, 140, 126, 0.15))' }}>
     <ellipse cx="12" cy="12" rx="3" ry="9" transform="rotate(45 12 12)" />
     <ellipse cx="12" cy="12" rx="3" ry="9" transform="rotate(-45 12 12)" />
-    <circle cx="12" cy="12" r="2" fill="currentColor" />
+    <ellipse cx="12" cy="12" rx="9" ry="3" />
+    <circle cx="12" cy="12" r="3" fill="#25D366" />
   </svg>
 );
 
-const IconChemistry = ({ size = 28 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+const IconChemistry = ({ size = 48 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#128C7E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', filter: 'drop-shadow(0 2px 4px rgba(18, 140, 126, 0.15))' }}>
     <path d="M10 2h4" />
-    <path d="M12 2v7" />
-    <path d="M8.5 9h7" />
-    <path d="M8.5 9L4 19a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3L15.5 9" />
-    <path d="M6.5 16h11" />
+    <path d="M12 2v6" />
+    <path d="M8 9h8" />
+    <path d="M19 17l-4-8V2H9v7l-4 8a3 3 0 0 0 2.5 4.5h11A3 3 0 0 0 19 17z" />
+    <path d="M7 16h10v2a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" fill="#25D366" opacity="0.8" />
   </svg>
 );
 
-const IconMathematics = ({ size = 28 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M18 7H6l6 5-6 5h12" />
+const IconMathematics = ({ size = 48 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#128C7E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', filter: 'drop-shadow(0 2px 4px rgba(18, 140, 126, 0.15))' }}>
+    <rect x="3" y="3" width="18" height="18" rx="3" fill="#d9fdd3" stroke="#25D366" strokeWidth="2" />
+    <path d="M16 8H8l4 4-4 4h8" stroke="#128C7E" strokeWidth="2.5" />
   </svg>
 );
 
-const IconBiology = ({ size = 28 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2z" />
+const IconBiology = ({ size = 48 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#128C7E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', filter: 'drop-shadow(0 2px 4px rgba(18, 140, 126, 0.15))' }}>
+    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2z" fill="#25D366" opacity="0.8" />
     <path d="M9 22v-3" />
     <path d="M11 20l3.5-3.5" />
   </svg>
 );
 
-const IconDefaultSubject = ({ size = 28 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+const IconDefaultSubject = ({ size = 48 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#128C7E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', filter: 'drop-shadow(0 2px 4px rgba(18, 140, 126, 0.15))' }}>
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" fill="#25D366" opacity="0.4" />
     <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z" />
   </svg>
 );
