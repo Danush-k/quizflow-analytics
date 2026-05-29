@@ -1,237 +1,474 @@
-<svg width="1050" height="920" viewBox="0 0 1050 920" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Clean light background -->
-  <rect width="1050" height="920" fill="#F4F6F8" rx="16" />
-  
-  <!-- Grid accents for professional engineering layout look -->
+<svg width="1140" height="1160" viewBox="0 0 1140 1160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define modern fonts, gradients, shadows and neon effects -->
   <defs>
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- Background Grid Pattern -->
+    <pattern id="blueprint-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#1E293B" stroke-width="0.75" stroke-opacity="0.5"/>
     </pattern>
+
+    <!-- Drop Shadows for Cards -->
+    <filter id="premium-shadow" x="-8%" y="-8%" width="116%" height="116%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Neon Glow for Connector Lines -->
+    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Header Gradients -->
+    <linearGradient id="grad-edu" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0D9488" />
+      <stop offset="100%" stop-color="#0F766E" />
+    </linearGradient>
+    
+    <linearGradient id="grad-user" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <linearGradient id="grad-telemetry" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+
+    <!-- Standard Relationship Markers (Crow's Foot and Arrows) -->
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718096" />
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
     </marker>
     <marker id="crow" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 2 L 6 5 L 0 8 M 6 2 L 6 8" fill="none" stroke="#718096" stroke-width="1.5" />
+      <path d="M 0 1.5 L 6 5 L 0 8.5 M 6 1.5 L 6 8.5" fill="none" stroke="#64748B" stroke-width="1.5" />
     </marker>
   </defs>
-  <rect width="1050" height="920" fill="url(#grid)" rx="16" />
 
-  <!-- TITLE HEADER -->
-  <text x="525" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="-0.5px">Entity-Relationship (ER) Blueprint — MongoDB Collections</text>
-  <text x="525" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#64748B" text-anchor="middle">Precision hand-crafted vector diagram illustrating collection connections and schema fields</text>
+  <!-- BACKGROUND SHEET -->
+  <rect width="1140" height="1160" fill="#0B0F17" rx="16" />
+  <rect width="1140" height="1160" fill="url(#blueprint-grid)" rx="16" />
 
-  <!-- ==================== METADATA FLOW (ROW 1) ==================== -->
+  <!-- HEADER -->
+  <text x="570" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC" text-anchor="middle" letter-spacing="-0.5px">Entity-Relationship (ER) Schema Blueprint</text>
+  <text x="570" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#94A3B8" text-anchor="middle">Enterprise MongoDB Collections, Compound Indexes &amp; Active Telemetry Relations</text>
 
-  <!-- EXAMS COLLECTION -->
-  <g transform="translate(60, 120)">
-    <rect width="240" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#128C7E" />
-    <rect y="30" width="240" height="10" fill="#128C7E" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">exams</text>
+  <!-- ==================== ROW 1: CONTENT SYLLABUS DIRECTORY (x=60, x=425, x=790) ==================== -->
+
+  <!-- 1. EXAMS COLLECTION -->
+  <g transform="translate(60, 120)" filter="url(#premium-shadow)">
+    <!-- Card Frame -->
+    <rect width="290" height="210" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <!-- Gradient Header -->
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-edu)" />
+    <!-- Header Text -->
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">exams</text>
+    <!-- Database Icon -->
+    <path d="M 260 17 C 260 14 266 14 270 14 C 274 14 280 14 280 17 L 280 25 C 280 28 274 28 270 28 C 266 28 260 28 260 25 Z M 260 21 C 260 24 266 24 270 24 C 274 24 280 24 280 21" stroke="#E2E8F0" stroke-width="1.5" fill="none" />
     
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  exam_id</text>
-    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
-    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    description</text>
-    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    <!-- Fields List -->
+    <!-- exam_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-size="11" font-weight="700" fill="#F8FAFC">exam_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- name -->
+    <text x="52" y="90" font-family="monospace" font-size="11" fill="#E2E8F0">name</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- description -->
+    <text x="52" y="114" font-family="monospace" font-size="11" fill="#E2E8F0">description</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- total_subjects -->
+    <text x="52" y="138" font-family="monospace" font-size="11" fill="#E2E8F0">total_subjects</text>
+    <text x="188" y="138" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- total_questions -->
+    <text x="52" y="162" font-family="monospace" font-size="11" fill="#E2E8F0">total_questions</text>
+    <text x="188" y="162" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- created_at -->
+    <text x="52" y="186" font-family="monospace" font-size="11" fill="#E2E8F0">created_at</text>
+    <text x="188" y="186" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
   </g>
 
-  <!-- SUBJECTS COLLECTION -->
-  <g transform="translate(400, 120)">
-    <rect width="240" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#128C7E" />
-    <rect y="30" width="240" height="10" fill="#128C7E" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">subjects</text>
-    
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  subject_id</text>
-    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  exam_id</text>
-    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
-    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  <!-- 2. SUBJECTS COLLECTION -->
+  <g transform="translate(425, 120)" filter="url(#premium-shadow)">
+    <rect width="290" height="210" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-edu)" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">subjects</text>
+    <path d="M 260 17 C 260 14 266 14 270 14 C 274 14 280 14 280 17 L 280 25 C 280 28 274 28 270 28 C 266 28 260 28 260 25 Z" stroke="#E2E8F0" stroke-width="1.5" fill="none" />
+
+    <!-- subject_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-size="11" font-weight="700" fill="#F8FAFC">subject_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- exam_id -->
+    <rect x="16" y="79" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="90" font-family="monospace" font-weight="700" fill="#F8FAFC">exam_id</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="79" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- name -->
+    <text x="52" y="114" font-family="monospace" font-size="11" fill="#E2E8F0">name</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- total_chapters -->
+    <text x="52" y="138" font-family="monospace" font-size="11" fill="#E2E8F0">total_chapters</text>
+    <text x="188" y="138" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- total_questions -->
+    <text x="52" y="162" font-family="monospace" font-size="11" fill="#E2E8F0">total_questions</text>
+    <text x="188" y="162" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- created_at -->
+    <text x="52" y="186" font-family="monospace" font-size="11" fill="#E2E8F0">created_at</text>
+    <text x="188" y="186" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
   </g>
 
-  <!-- CHAPTERS COLLECTION -->
-  <g transform="translate(740, 120)">
-    <rect width="240" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#128C7E" />
-    <rect y="30" width="240" height="10" fill="#128C7E" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">chapters</text>
-    
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  chapter_id</text>
-    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  subject_id</text>
-    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
-    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    description</text>
-    <text x="110" y="140" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  <!-- 3. CHAPTERS COLLECTION -->
+  <g transform="translate(790, 120)" filter="url(#premium-shadow)">
+    <rect width="290" height="260" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-edu)" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">chapters</text>
+    <path d="M 260 17 C 260 14 266 14 270 14 C 274 14 280 14 280 17 L 280 25 Z" stroke="#E2E8F0" stroke-width="1.5" fill="none" />
+
+    <!-- chapter_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-weight="700" fill="#F8FAFC">chapter_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- subject_id -->
+    <rect x="16" y="79" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="90" font-family="monospace" font-weight="700" fill="#F8FAFC">subject_id</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="79" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- exam_id -->
+    <rect x="16" y="103" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="113" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="114" font-family="monospace" fill="#E2E8F0">exam_id</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- subject_name -->
+    <text x="52" y="138" font-family="monospace" font-size="11" fill="#E2E8F0">subject_name</text>
+    <text x="188" y="138" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- chapter_name -->
+    <text x="52" y="162" font-family="monospace" font-size="11" fill="#E2E8F0">chapter_name</text>
+    <text x="188" y="162" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- name -->
+    <text x="52" y="186" font-family="monospace" font-size="11" fill="#E2E8F0">name</text>
+    <text x="188" y="186" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- total_questions -->
+    <text x="52" y="210" font-family="monospace" font-size="11" fill="#E2E8F0">total_questions</text>
+    <text x="188" y="210" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- created_at -->
+    <text x="52" y="234" font-family="monospace" font-size="11" fill="#E2E8F0">created_at</text>
+    <text x="188" y="234" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
   </g>
 
-  <!-- ==================== METADATA TO TRANSACTION (ROW 2) ==================== -->
+  <!-- ==================== ROW 2: CORE ACTORS / TRANSACTIONAL DIRECTORY (x=60, x=425, x=790) ==================== -->
 
-  <!-- USERS COLLECTION -->
-  <g transform="translate(60, 390)">
-    <rect width="240" height="160" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#475569" />
-    <rect y="30" width="240" height="10" fill="#475569" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">users</text>
-    
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  user_id</text>
-    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
-    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    email</text>
-    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  <!-- 4. USERS COLLECTION -->
+  <g transform="translate(60, 410)" filter="url(#premium-shadow)">
+    <rect width="290" height="140" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-user)" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">users</text>
+    <path d="M 260 21 A 4 4 0 1 1 268 21 A 4 4 0 1 1 260 21" stroke="#E2E8F0" stroke-width="1.5" fill="none" />
+
+    <!-- user_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-weight="700" fill="#F8FAFC">user_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- name -->
+    <text x="52" y="90" font-family="monospace" font-size="11" fill="#E2E8F0">name</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- email -->
+    <text x="52" y="114" font-family="monospace" font-size="11" fill="#E2E8F0">email</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
   </g>
 
-  <!-- QUIZ SESSIONS COLLECTION -->
-  <g transform="translate(400, 390)">
-    <rect width="240" height="230" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#075E54" />
-    <rect y="30" width="240" height="10" fill="#075E54" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">quiz_sessions</text>
-    
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  session_id</text>
-    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  user_id</text>
-    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  chapter_id</text>
-    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    status</text>
-    <text x="110" y="140" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="165" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    score</text>
-    <text x="110" y="165" font-family="monospace" font-size="11" fill="#64748B">: int</text>
-    
-    <text x="12" y="190" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    correct_answers</text>
-    <text x="110" y="190" font-family="monospace" font-size="11" fill="#64748B">: int</text>
+  <!-- 5. QUIZ SESSIONS COLLECTION -->
+  <g transform="translate(425, 410)" filter="url(#premium-shadow)">
+    <rect width="290" height="360" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-telemetry)" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">quiz_sessions</text>
+    <!-- Double Chevron Speed Icon -->
+    <path d="M 260 17 L 268 22 L 260 27 M 266 17 L 274 22 L 266 27" stroke="#E2E8F0" stroke-width="1.5" fill="none" />
+
+    <!-- session_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-weight="700" fill="#F8FAFC">session_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- user_id -->
+    <rect x="16" y="79" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="90" font-family="monospace" font-weight="700" fill="#F8FAFC">user_id</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <!-- Compound Index Tag (pink) -->
+    <rect x="245" y="79" width="28" height="14" rx="3" fill="#EC4899" />
+    <text x="259" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">CMP</text>
+
+    <!-- chapter_id -->
+    <rect x="16" y="103" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="113" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="114" font-family="monospace" fill="#E2E8F0">chapter_id</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- status -->
+    <text x="52" y="138" font-family="monospace" font-size="11" fill="#E2E8F0">status</text>
+    <text x="188" y="138" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="127" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="137" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- score -->
+    <text x="52" y="162" font-family="monospace" font-size="11" fill="#E2E8F0">score</text>
+    <text x="188" y="162" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- correct_answers -->
+    <text x="52" y="186" font-family="monospace" font-size="11" fill="#E2E8F0">correct_answers</text>
+    <text x="188" y="186" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- total_questions -->
+    <text x="52" y="210" font-family="monospace" font-size="11" fill="#E2E8F0">total_questions</text>
+    <text x="188" y="210" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- current_question_index -->
+    <text x="52" y="234" font-family="monospace" font-size="11" fill="#E2E8F0">current_q_idx</text>
+    <text x="188" y="234" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
+
+    <!-- created_at -->
+    <text x="52" y="258" font-family="monospace" font-size="11" fill="#E2E8F0">created_at</text>
+    <text x="188" y="258" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
+    <rect x="245" y="247" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="257" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- started_at -->
+    <text x="52" y="282" font-family="monospace" font-size="11" fill="#E2E8F0">started_at</text>
+    <text x="188" y="282" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
+
+    <!-- completed_at -->
+    <text x="52" y="306" font-family="monospace" font-size="11" fill="#E2E8F0">completed_at</text>
+    <text x="188" y="306" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
+
+    <!-- answers -->
+    <text x="52" y="330" font-family="monospace" font-size="11" fill="#E2E8F0">answers</text>
+    <text x="188" y="330" font-family="monospace" font-size="11" fill="#94A3B8">: array</text>
   </g>
 
-  <!-- QUESTIONS COLLECTION -->
-  <g transform="translate(740, 390)">
-    <rect width="240" height="200" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#128C7E" />
-    <rect y="30" width="240" height="10" fill="#128C7E" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">questions</text>
-    
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  question_id</text>
-    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  chapter_id</text>
-    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    question_text</text>
-    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    options</text>
-    <text x="110" y="140" font-family="monospace" font-size="11" fill="#64748B">: array</text>
-    
-    <text x="12" y="165" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    correct_answer</text>
-    <text x="110" y="165" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  <!-- 6. QUESTIONS COLLECTION -->
+  <g transform="translate(790, 410)" filter="url(#premium-shadow)">
+    <rect width="290" height="230" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-edu)" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">questions</text>
+    <!-- Document Index list icon -->
+    <path d="M 262 17 L 272 17 L 272 27 L 262 27 Z M 265 20 L 269 20 M 265 23 L 269 23" stroke="#E2E8F0" stroke-width="1.2" fill="none" />
+
+    <!-- question_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-weight="700" fill="#F8FAFC">question_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- chapter_id -->
+    <rect x="16" y="79" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="90" font-family="monospace" font-weight="700" fill="#F8FAFC">chapter_id</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="79" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- question_text -->
+    <text x="52" y="114" font-family="monospace" font-size="11" fill="#E2E8F0">question_text</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- options -->
+    <text x="52" y="138" font-family="monospace" font-size="11" fill="#E2E8F0">options</text>
+    <text x="188" y="138" font-family="monospace" font-size="11" fill="#94A3B8">: array</text>
+
+    <!-- correct_answer -->
+    <text x="52" y="162" font-family="monospace" font-size="11" fill="#E2E8F0">correct_answer</text>
+    <text x="188" y="162" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- difficulty -->
+    <text x="52" y="186" font-family="monospace" font-size="11" fill="#E2E8F0">difficulty</text>
+    <text x="188" y="186" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="175" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="185" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- explanation -->
+    <text x="52" y="210" font-family="monospace" font-size="11" fill="#E2E8F0">explanation</text>
+    <text x="188" y="210" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
   </g>
 
-  <!-- ==================== TELEMETRY FLOW (ROW 3) ==================== -->
+  <!-- ==================== ROW 3: RESPONSES TELEMETRY LAYER (x=425, y=820) ==================== -->
 
-  <!-- RESPONSES COLLECTION -->
-  <g transform="translate(400, 680)">
-    <rect width="240" height="200" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
-    <rect width="240" height="40" rx="10" fill="#075E54" />
-    <rect y="30" width="240" height="10" fill="#075E54" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">responses</text>
-    
-    <!-- Table Content -->
-    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  response_id</text>
-    <text x="130" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  session_id</text>
-    <text x="130" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  question_id</text>
-    <text x="130" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    user_answer</text>
-    <text x="130" y="140" font-family="monospace" font-size="11" fill="#64748B">: string</text>
-    
-    <text x="12" y="165" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    is_correct</text>
-    <text x="130" y="165" font-family="monospace" font-size="11" fill="#64748B">: boolean</text>
-    
-    <text x="12" y="190" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    response_duration_ms</text>
-    <text x="130" y="190" font-family="monospace" font-size="11" fill="#64748B">: int</text>
+  <!-- 7. RESPONSES COLLECTION -->
+  <g transform="translate(425, 820)" filter="url(#premium-shadow)">
+    <rect width="290" height="262" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="url(#grad-telemetry)" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">responses</text>
+    <!-- Lightning Bolt Telemetry Icon -->
+    <path d="M 267 15 L 260 22 L 266 22 L 262 29 L 272 20 L 266 20 Z" fill="#E2E8F0" />
+
+    <!-- response_id -->
+    <rect x="16" y="55" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="52" y="66" font-family="monospace" font-weight="700" fill="#F8FAFC">response_id</text>
+    <text x="188" y="66" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="55" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="256" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+
+    <!-- session_id -->
+    <rect x="16" y="79" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="90" font-family="monospace" font-weight="700" font-size="11" fill="#F8FAFC">session_id</text>
+    <text x="188" y="90" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <!-- Compound Index Tag (pink) -->
+    <rect x="245" y="79" width="28" height="14" rx="3" fill="#EC4899" />
+    <text x="259" y="89" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">CMP</text>
+
+    <!-- question_id -->
+    <rect x="16" y="103" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="113" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="52" y="114" font-family="monospace" font-weight="700" font-size="11" fill="#F8FAFC">question_id</text>
+    <text x="188" y="114" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+    <rect x="245" y="103" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="113" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- user_answer -->
+    <text x="52" y="138" font-family="monospace" font-size="11" fill="#E2E8F0">user_answer</text>
+    <text x="188" y="138" font-family="monospace" font-size="11" fill="#94A3B8">: string</text>
+
+    <!-- is_correct -->
+    <text x="52" y="162" font-family="monospace" font-size="11" fill="#E2E8F0">is_correct</text>
+    <text x="188" y="162" font-family="monospace" font-size="11" fill="#94A3B8">: boolean</text>
+
+    <!-- question_shown_at -->
+    <text x="52" y="186" font-family="monospace" font-size="11" fill="#E2E8F0">question_shown_at</text>
+    <text x="188" y="186" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
+
+    <!-- answer_submitted_at -->
+    <text x="52" y="210" font-family="monospace" font-size="11" fill="#E2E8F0">answer_sub_at</text>
+    <text x="188" y="210" font-family="monospace" font-size="11" fill="#94A3B8">: date</text>
+    <rect x="245" y="199" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="259" y="209" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+
+    <!-- response_duration_ms -->
+    <text x="52" y="234" font-family="monospace" font-size="11" fill="#E2E8F0">response_duration_ms</text>
+    <text x="188" y="234" font-family="monospace" font-size="11" fill="#94A3B8">: int</text>
   </g>
 
-  <!-- ==================== RELATIONSHIP LINES & CONNECTORS ==================== -->
+  <!-- ==================== NEON BLUEPRINT CONNECTOR LINES ==================== -->
 
-  <!-- 1. Exams -> Subjects -->
-  <path d="M 300 200 L 400 200" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
-  <rect x="330" y="188" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="350" y="201" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+  <!-- 1. Exams -> Subjects (Straight vector link with crow marker and arrow marker) -->
+  <path d="M 350 225 L 425 225" stroke="#14B8A6" stroke-width="2.5" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" filter="url(#neon-glow)" />
+  <rect x="368" y="213" width="38" height="20" rx="4" fill="#1E293B" stroke="#0F766E" stroke-width="1" />
+  <text x="387" y="227" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#14B8A6" text-anchor="middle" font-weight="800">1 : N</text>
 
-  <!-- 2. Subjects -> Chapters -->
-  <path d="M 640 200 L 740 200" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
-  <rect x="670" y="188" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="690" y="201" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+  <!-- 2. Subjects -> Chapters (Straight vector link) -->
+  <path d="M 715 225 L 790 225" stroke="#14B8A6" stroke-width="2.5" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" filter="url(#neon-glow)" />
+  <rect x="733" y="213" width="38" height="20" rx="4" fill="#1E293B" stroke="#0F766E" stroke-width="1" />
+  <text x="752" y="227" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#14B8A6" text-anchor="middle" font-weight="800">1 : N</text>
 
-  <!-- 3. Chapters -> Questions -->
-  <path d="M 860 300 L 860 390" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
-  <rect x="840" y="333" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="860" y="346" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+  <!-- 3. Chapters -> Questions (Vertical downward straight link) -->
+  <path d="M 935 380 L 935 410" stroke="#14B8A6" stroke-width="2.5" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" filter="url(#neon-glow)" />
+  <rect x="916" y="385" width="38" height="20" rx="4" fill="#1E293B" stroke="#0F766E" stroke-width="1" />
+  <text x="935" y="399" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#14B8A6" text-anchor="middle" font-weight="800">1 : N</text>
 
-  <!-- 4. Users -> Quiz Sessions -->
-  <path d="M 300 460 L 400 460" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
-  <rect x="330" y="448" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="350" y="461" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+  <!-- 4. Users -> Quiz Sessions (Straight vector link) -->
+  <path d="M 350 480 L 425 480" stroke="#6366F1" stroke-width="2.5" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" filter="url(#neon-glow)" />
+  <rect x="368" y="468" width="38" height="20" rx="4" fill="#1E293B" stroke="#4F46E5" stroke-width="1" />
+  <text x="387" y="482" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#818CF8" text-anchor="middle" font-weight="800">1 : N</text>
 
-  <!-- 5. Chapters -> Quiz Sessions -->
-  <!-- Diagonal path with routing -->
-  <path d="M 740 270 L 690 310 L 590 310 L 520 390" stroke="#718096" stroke-dasharray="4 4" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
-  <rect x="610" y="298" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="630" y="311" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#718096" text-anchor="middle" font-weight="bold">Reference</text>
+  <!-- 5. Chapters -> Quiz Sessions (Orthogonal Routed dashed helper link) -->
+  <path d="M 790 300 L 745 300 L 745 445 L 715 445" stroke="#94A3B8" stroke-dasharray="5 4" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+  <rect x="726" y="290" width="38" height="18" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1" />
+  <text x="745" y="302" font-family="system-ui, -apple-system, sans-serif" font-size="8" fill="#94A3B8" text-anchor="middle" font-weight="700">Ref</text>
 
-  <!-- 6. Quiz Sessions -> Responses -->
-  <path d="M 520 620 L 520 680" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
-  <rect x="500" y="640" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="520" y="653" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+  <!-- 6. Quiz Sessions -> Responses (Vertical downward straight link) -->
+  <path d="M 570 770 L 570 820" stroke="#10B981" stroke-width="2.5" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" filter="url(#neon-glow)" />
+  <rect x="551" y="783" width="38" height="20" rx="4" fill="#1E293B" stroke="#047857" stroke-width="1" />
+  <text x="570" y="797" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#10B981" text-anchor="middle" font-weight="800">1 : N</text>
 
-  <!-- 7. Questions -> Responses -->
-  <path d="M 860 590 L 860 640 L 640 760" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
-  <rect x="760" y="690" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
-  <text x="780" y="703" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+  <!-- 7. Questions -> Responses (Orthogonal routed vector link) -->
+  <path d="M 935 640 L 935 730 L 750 730 L 750 880 L 715 880" stroke="#10B981" stroke-width="2.5" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" filter="url(#neon-glow)" />
+  <rect x="800" y="720" width="38" height="20" rx="4" fill="#1E293B" stroke="#047857" stroke-width="1" />
+  <text x="819" y="734" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#10B981" text-anchor="middle" font-weight="800">1 : N</text>
 
-  <!-- DIAGRAM LEGEND -->
-  <g transform="translate(60, 710)">
-    <rect width="240" height="140" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
-    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0F172A">Legend &amp; Design System</text>
-    
-    <rect x="12" y="42" width="14" height="14" rx="3" fill="#128C7E" />
-    <text x="34" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A5568">Educational Content Metadata</text>
-    
-    <rect x="12" y="65" width="14" height="14" rx="3" fill="#075E54" />
-    <text x="34" y="76" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A5568">Dynamic telemetric Collections</text>
-    
-    <rect x="12" y="88" width="14" height="14" rx="3" fill="#475569" />
-    <text x="34" y="99" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A5568">User Account Directory</text>
-    
-    <line x1="12" y1="120" x2="30" y2="120" stroke="#718096" stroke-width="2" />
-    <text x="38" y="123" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#718096" font-weight="bold">Solid lines: Explicit Reference Relations (PK/FK)</text>
+
+  <!-- ==================== PREMIUM EXPLANATORY DIAGRAM LEGEND (y=820, x=60) ==================== -->
+  <g transform="translate(60, 820)" filter="url(#premium-shadow)">
+    <!-- Legend Card Frame -->
+    <rect width="290" height="262" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1.5" />
+    <path d="M 0 10 A 10 10 0 0 1 10 0 L 280 0 A 10 10 0 0 1 290 10 L 290 40 L 0 40 Z" fill="#1F2937" />
+    <text x="16" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">Legend &amp; Design Specs</text>
+
+    <!-- Educational Metadata -->
+    <rect x="16" y="58" width="14" height="14" rx="3" fill="url(#grad-edu)" />
+    <text x="40" y="69" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">Educational Content Metadata</text>
+
+    <!-- User Account Directory -->
+    <rect x="16" y="85" width="14" height="14" rx="3" fill="url(#grad-user)" />
+    <text x="40" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">User Account Directory</text>
+
+    <!-- Telemetry Engine -->
+    <rect x="16" y="112" width="14" height="14" rx="3" fill="url(#grad-telemetry)" />
+    <text x="40" y="123" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">Dynamic Telemetry Engine</text>
+
+    <line x1="16" y1="145" x2="32" y2="145" stroke="#1F2937" stroke-width="1" />
+
+    <!-- PK Tag Explainer -->
+    <rect x="16" y="158" width="22" height="14" rx="3" fill="#0D9488" />
+    <text x="27" y="168" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">PK</text>
+    <text x="48" y="169" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Primary Key Collection Identifier</text>
+
+    <!-- FK Tag Explainer -->
+    <rect x="16" y="180" width="22" height="14" rx="3" fill="#F59E0B" />
+    <text x="27" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">FK</text>
+    <text x="48" y="191" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Foreign Key Reference Field</text>
+
+    <!-- UI / IDX / CMP Explainer -->
+    <rect x="16" y="202" width="22" height="14" rx="3" fill="#3B82F6" />
+    <text x="27" y="212" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">UI</text>
+    <text x="48" y="213" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Unique Index Constraint (1:1)</text>
+
+    <rect x="16" y="224" width="28" height="14" rx="3" fill="#6B7280" />
+    <text x="30" y="234" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">IDX</text>
+    <text x="54" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Standard Query Filter Index</text>
+
+    <rect x="16" y="246" width="28" height="14" rx="3" fill="#EC4899" />
+    <text x="30" y="256" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle">CMP</text>
+    <text x="54" y="257" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Compound Multi-Key Index</text>
   </g>
 </svg>
