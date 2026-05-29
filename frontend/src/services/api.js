@@ -12,14 +12,26 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0'
+  },
   timeout: 15000,
 });
 
-// Inject user identity header on every request
+// Inject user identity header on every request & add cache buster to GETs
 apiClient.interceptors.request.use((config) => {
   const userId = localStorage.getItem('user_id');
   if (userId) config.headers['X-User-ID'] = userId;
+  
+  if (config.method === 'get') {
+    config.params = {
+      ...config.params,
+      _t: Date.now()
+    };
+  }
   return config;
 });
 
