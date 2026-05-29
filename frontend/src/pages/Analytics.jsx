@@ -792,7 +792,7 @@ export default function Analytics() {
                           stroke={color} strokeWidth="18"
                           strokeLinecap="round"
                           strokeDasharray={`${filled} ${circ}`}
-                          strokeDashoffset={circ * 0.25}
+                          strokeDashoffset={0}
                           style={{ transition: 'stroke-dasharray 1s cubic-bezier(0.16,1,0.3,1)', transform: 'rotate(-90deg)', transformOrigin: `${cx}px ${cy}px` }}
                         />
                         {/* Center text */}
