@@ -536,7 +536,7 @@ function Results() {
   let markedCount = 0;
 
   responses.forEach((resp, idx) => {
-    const qid = trackingValues.find(t => t.correctAnswer === resp.correct_answer || t.selectedAnswer === resp.user_answer)?.questionId;
+    const qid = resp.question_id;
     const track = trackingObj[qid];
     const duration = track?.responseDuration || resp.response_duration_ms || 0;
 
@@ -964,7 +964,7 @@ function Results() {
                       const isCorrect = resp.is_correct === true;
                       const isSkipped = !resp.user_answer;
                       
-                      const qid = trackingValues.find(t => t.correctAnswer === resp.correct_answer || t.selectedAnswer === resp.user_answer)?.questionId;
+                      const qid = resp.question_id;
                       const track = trackingObj[qid];
                       const isMarked = track?.markedForReview;
 
@@ -999,7 +999,7 @@ function Results() {
                   <div className="wa-center-card">
                     <div className="wa-center-q-header">
                       <span className="wa-center-q-badge">QUESTION {reviewActiveIndex + 1}</span>
-                      <span className="wa-center-q-diff">Difficulty: {trackingObj[trackingValues.find(t => t.correctAnswer === responses[reviewActiveIndex]?.correct_answer || t.selectedAnswer === responses[reviewActiveIndex]?.user_answer)?.questionId]?.difficulty || 'Medium'}</span>
+                      <span className="wa-center-q-diff">Difficulty: {trackingObj[responses[reviewActiveIndex]?.question_id]?.difficulty || 'Medium'}</span>
                     </div>
 
                     <p className="wa-center-question-text">
@@ -1065,7 +1065,7 @@ function Results() {
                   
                   {(() => {
                     const currentResp = responses[reviewActiveIndex];
-                    const qid = trackingValues.find(t => t.correctAnswer === currentResp?.correct_answer || t.selectedAnswer === currentResp?.user_answer)?.questionId;
+                    const qid = currentResp?.question_id;
                     const track = trackingObj[qid];
                     
                     return (
