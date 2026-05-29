@@ -42,15 +42,24 @@ The platform is designed as an asynchronous, non-blocking single-page applicatio
 
 ---
 
-## 📊 Database Architecture & ER Blueprint
+## 📊 Database Architecture & Schema Blueprints
 
-The schema is optimized for highly granular telemetry tracking and fast data retrieval without complex database joins. All schemas, field structures, and data relations are documented in the vector blueprint below.
+The database is designed with MongoDB best practices for telemetry tracking and fast analytical queries. By keeping a clean structure and indexing critical fields, it achieves high-speed reads for syllabus contents and ultra-fast writes for telemetric response logs.
 
-### Entity-Relationship (ER) Schema Blueprint
+### 🏛️ Collection Architecture & Hierarchical Flow
+
+The platform separates its concerns into 7 MongoDB collections, distinguishing static syllabus catalog metadata (exams, subjects, chapters, questions) from active, fast-changing telemetry (users, quiz sessions, responses). The diagram below illustrates this logical hierarchy and how reference relationships flow:
+
+![MongoDB Collection Architecture](docs/collection_schema_diagram.png)
+
+### 📐 Entity-Relationship (ER) Schema Blueprint
+
+To inspect the detailed internal document fields, exact MongoDB BSON data typings (such as `ObjectId`, `String`, `Int32`, `Boolean`, and `DateTime`), and reference relations, refer to the high-resolution ER Blueprint below:
+
 > [!TIP]
-> This SVG-based database blueprint is high-resolution, search-friendly, and renders natively. Hover over or zoom to inspect exact field typings and database constraints.
+> This ER blueprint is designed specifically for MongoDB document schemas, mapping the unique primary key `_id` (`ObjectId`) and foreign keys to detail all system connections.
 
-![Detailed Database Schema & ER Blueprint](docs/er_diagram_vector.svg)
+![Detailed Database Schema & ER Blueprint](docs/er_diagram_vector.png)
 
 ### High-Performance MongoDB Index Design
 
@@ -179,7 +188,8 @@ SkillBytes/
 │   └── package.json
 │
 ├── docs/                        # Stored database schema visual assets
-│   └── er_diagram_vector.svg    # Modernized Dark ER database schema blueprint
+│   ├── er_diagram_vector.png    # Modernized Dark ER database schema blueprint
+│   └── collection_schema_diagram.png # Database collection schema diagram
 └── docker-compose.yml
 ```
 
