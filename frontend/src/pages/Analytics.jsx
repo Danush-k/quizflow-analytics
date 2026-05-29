@@ -427,7 +427,7 @@ export default function Analytics() {
 
             {/* Peak Hours Trend (Full Width) */}
             <div className="wa-charts-row">
-              <Section icon="⏰" title="Activity by Hour"
+              <Section icon="⏰" title="Today's Activity by Hour"
                 className="wa-section-full"
                 badge={`Peak: ${formatHour(m.peakHour)}`}>
                 {chartHours.every(h => h.activity === 0)
