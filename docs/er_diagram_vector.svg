@@ -1,0 +1,237 @@
+<svg width="1050" height="920" viewBox="0 0 1050 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Clean light background -->
+  <rect width="1050" height="920" fill="#F4F6F8" rx="16" />
+  
+  <!-- Grid accents for professional engineering layout look -->
+  <defs>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718096" />
+    </marker>
+    <marker id="crow" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 6 5 L 0 8 M 6 2 L 6 8" fill="none" stroke="#718096" stroke-width="1.5" />
+    </marker>
+  </defs>
+  <rect width="1050" height="920" fill="url(#grid)" rx="16" />
+
+  <!-- TITLE HEADER -->
+  <text x="525" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="-0.5px">Entity-Relationship (ER) Blueprint — MongoDB Collections</text>
+  <text x="525" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#64748B" text-anchor="middle">Precision hand-crafted vector diagram illustrating collection connections and schema fields</text>
+
+  <!-- ==================== METADATA FLOW (ROW 1) ==================== -->
+
+  <!-- EXAMS COLLECTION -->
+  <g transform="translate(60, 120)">
+    <rect width="240" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#128C7E" />
+    <rect y="30" width="240" height="10" fill="#128C7E" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">exams</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  exam_id</text>
+    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
+    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    description</text>
+    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  </g>
+
+  <!-- SUBJECTS COLLECTION -->
+  <g transform="translate(400, 120)">
+    <rect width="240" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#128C7E" />
+    <rect y="30" width="240" height="10" fill="#128C7E" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">subjects</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  subject_id</text>
+    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  exam_id</text>
+    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
+    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  </g>
+
+  <!-- CHAPTERS COLLECTION -->
+  <g transform="translate(740, 120)">
+    <rect width="240" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#128C7E" />
+    <rect y="30" width="240" height="10" fill="#128C7E" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">chapters</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  chapter_id</text>
+    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  subject_id</text>
+    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
+    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    description</text>
+    <text x="110" y="140" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  </g>
+
+  <!-- ==================== METADATA TO TRANSACTION (ROW 2) ==================== -->
+
+  <!-- USERS COLLECTION -->
+  <g transform="translate(60, 390)">
+    <rect width="240" height="160" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#475569" />
+    <rect y="30" width="240" height="10" fill="#475569" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">users</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  user_id</text>
+    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    name</text>
+    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    email</text>
+    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  </g>
+
+  <!-- QUIZ SESSIONS COLLECTION -->
+  <g transform="translate(400, 390)">
+    <rect width="240" height="230" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#075E54" />
+    <rect y="30" width="240" height="10" fill="#075E54" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">quiz_sessions</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  session_id</text>
+    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  user_id</text>
+    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  chapter_id</text>
+    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    status</text>
+    <text x="110" y="140" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="165" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    score</text>
+    <text x="110" y="165" font-family="monospace" font-size="11" fill="#64748B">: int</text>
+    
+    <text x="12" y="190" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    correct_answers</text>
+    <text x="110" y="190" font-family="monospace" font-size="11" fill="#64748B">: int</text>
+  </g>
+
+  <!-- QUESTIONS COLLECTION -->
+  <g transform="translate(740, 390)">
+    <rect width="240" height="200" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#128C7E" />
+    <rect y="30" width="240" height="10" fill="#128C7E" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">questions</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  question_id</text>
+    <text x="110" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  chapter_id</text>
+    <text x="110" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    question_text</text>
+    <text x="110" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    options</text>
+    <text x="110" y="140" font-family="monospace" font-size="11" fill="#64748B">: array</text>
+    
+    <text x="12" y="165" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    correct_answer</text>
+    <text x="110" y="165" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+  </g>
+
+  <!-- ==================== TELEMETRY FLOW (ROW 3) ==================== -->
+
+  <!-- RESPONSES COLLECTION -->
+  <g transform="translate(400, 680)">
+    <rect width="240" height="200" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05))" />
+    <rect width="240" height="40" rx="10" fill="#075E54" />
+    <rect y="30" width="240" height="10" fill="#075E54" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">responses</text>
+    
+    <!-- Table Content -->
+    <text x="12" y="65" font-family="monospace" font-size="11" font-weight="700" fill="#0D9488">PK  response_id</text>
+    <text x="130" y="65" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  session_id</text>
+    <text x="130" y="90" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="115" font-family="monospace" font-size="11" font-weight="700" fill="#EA580C">FK  question_id</text>
+    <text x="130" y="115" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="140" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    user_answer</text>
+    <text x="130" y="140" font-family="monospace" font-size="11" fill="#64748B">: string</text>
+    
+    <text x="12" y="165" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    is_correct</text>
+    <text x="130" y="165" font-family="monospace" font-size="11" fill="#64748B">: boolean</text>
+    
+    <text x="12" y="190" font-family="monospace" font-size="11" font-weight="500" fill="#334155">    response_duration_ms</text>
+    <text x="130" y="190" font-family="monospace" font-size="11" fill="#64748B">: int</text>
+  </g>
+
+  <!-- ==================== RELATIONSHIP LINES & CONNECTORS ==================== -->
+
+  <!-- 1. Exams -> Subjects -->
+  <path d="M 300 200 L 400 200" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
+  <rect x="330" y="188" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="350" y="201" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+
+  <!-- 2. Subjects -> Chapters -->
+  <path d="M 640 200 L 740 200" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
+  <rect x="670" y="188" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="690" y="201" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+
+  <!-- 3. Chapters -> Questions -->
+  <path d="M 860 300 L 860 390" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
+  <rect x="840" y="333" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="860" y="346" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+
+  <!-- 4. Users -> Quiz Sessions -->
+  <path d="M 300 460 L 400 460" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
+  <rect x="330" y="448" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="350" y="461" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+
+  <!-- 5. Chapters -> Quiz Sessions -->
+  <!-- Diagonal path with routing -->
+  <path d="M 740 270 L 690 310 L 590 310 L 520 390" stroke="#718096" stroke-dasharray="4 4" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+  <rect x="610" y="298" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="630" y="311" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#718096" text-anchor="middle" font-weight="bold">Reference</text>
+
+  <!-- 6. Quiz Sessions -> Responses -->
+  <path d="M 520 620 L 520 680" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
+  <rect x="500" y="640" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="520" y="653" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+
+  <!-- 7. Questions -> Responses -->
+  <path d="M 860 590 L 860 640 L 640 760" stroke="#718096" stroke-width="2" fill="none" marker-end="url(#arrow)" marker-start="url(#crow)" />
+  <rect x="760" y="690" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="780" y="703" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#4A5568" text-anchor="middle" font-weight="bold">1 : N</text>
+
+  <!-- DIAGRAM LEGEND -->
+  <g transform="translate(60, 710)">
+    <rect width="240" height="140" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+    <text x="12" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0F172A">Legend &amp; Design System</text>
+    
+    <rect x="12" y="42" width="14" height="14" rx="3" fill="#128C7E" />
+    <text x="34" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A5568">Educational Content Metadata</text>
+    
+    <rect x="12" y="65" width="14" height="14" rx="3" fill="#075E54" />
+    <text x="34" y="76" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A5568">Dynamic telemetric Collections</text>
+    
+    <rect x="12" y="88" width="14" height="14" rx="3" fill="#475569" />
+    <text x="34" y="99" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A5568">User Account Directory</text>
+    
+    <line x1="12" y1="120" x2="30" y2="120" stroke="#718096" stroke-width="2" />
+    <text x="38" y="123" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#718096" font-weight="bold">Solid lines: Explicit Reference Relations (PK/FK)</text>
+  </g>
+</svg>

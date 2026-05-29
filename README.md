@@ -4,6 +4,12 @@ A full-stack quiz platform for competitive exam preparation (JEE, NEET, NPTEL) b
 
 ## Architecture
 
+### Database Collection Relations
+
+![Database Collection Relations](docs/collection_schema_diagram.png)
+
+### Component Block Flow
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     Client Browser                      │
@@ -173,6 +179,10 @@ curl -X POST http://localhost:8000/api/admin/seed-data \
 | GET | `/api/analytics/difficulty-served` | Breakdown by easy/medium/hard |
 
 ## Database Schema
+
+### Entity-Relationship Blueprint
+
+![Detailed Entity-Relationship Diagram](docs/er_diagram_vector.svg)
 
 ### Collections & Indexes
 
