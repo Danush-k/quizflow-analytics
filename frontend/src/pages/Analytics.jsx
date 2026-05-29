@@ -73,6 +73,19 @@ const IconCheck = ({ size = 20 }) => (
   </svg>
 );
 
+const IconCross = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+const IconMinus = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+
 const IconPuzzle = ({ size = 20 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
     <path d="M12 2L2 7l10 5 10-5-10-5z" />
@@ -342,6 +355,7 @@ export default function Analytics() {
         served:            served?.total_questions_served  ?? 0,
         servedToday:       served?.total_today             ?? 0,
         answered:          answered?.total_answered        ?? 0,
+        answeredToday:     answered?.answered_today        ?? 0,
         correct:           answered?.correct               ?? 0,
         accuracy:          answered?.accuracy              ?? 0,
         avgTime:           avgTimeObj?.average_response_time_ms ?? 0,
@@ -426,6 +440,8 @@ export default function Analytics() {
     ? m.subjectAccuracy.reduce((mx, s) => s.accuracy > mx.accuracy ? s : mx, m.subjectAccuracy[0]) : null;
   const weakestSubject = m.subjectAccuracy.length > 0
     ? m.subjectAccuracy.reduce((mn, s) => s.accuracy < mn.accuracy ? s : mn, m.subjectAccuracy[0]) : null;
+  const totalSkipped = m.subjectAccuracy.length > 0
+    ? m.subjectAccuracy.reduce((acc, s) => acc + (s.skipped ?? 0), 0) : 0;
   const highestIncorrectChapter = m.chapterAccuracy.length > 0
     ? m.chapterAccuracy.reduce((mx, c) => c.incorrect > mx.incorrect ? c : mx, m.chapterAccuracy[0]) : null;
 
@@ -601,7 +617,7 @@ export default function Analytics() {
                 active={expandedSection === 'served'} />
               <StatCard index={1} icon={<IconCheck />} label="Questions Answered"
                 value={m.answered} unit="total" color={WA_MID}
-                sub={`${m.correct.toLocaleString()} correct`}
+                sub={`${m.answeredToday.toLocaleString()} today`}
                 onClick={() => setExpandedSection(expandedSection === 'answered' ? null : 'answered')}
                 active={expandedSection === 'answered'} />
               <StatCard index={2} icon={<IconClock />} label="Avg Response Time"
@@ -730,32 +746,42 @@ export default function Analytics() {
                   </div>
                   <button className="wa-dd-close" onClick={() => setExpandedSection(null)}>✕</button>
                 </div>
-                <div className="wa-dd-summary-strip" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                <div className="wa-dd-summary-strip" style={{ gridTemplateColumns: 'repeat(5, 1fr)' }}>
                   <div className="wa-dd-summary-card"><span><IconFlame size={16} style={{color: '#25D366'}} /> Strongest Subject</span><strong>{strongestSubject ? `${strongestSubject.subject} (${strongestSubject.accuracy.toFixed(1)}%)` : 'N/A'}</strong></div>
                   <div className="wa-dd-summary-card"><span><IconWarning size={16} style={{color: '#EF4444'}} /> Weakest Subject</span><strong>{weakestSubject ? `${weakestSubject.subject} (${weakestSubject.accuracy.toFixed(1)}%)` : 'N/A'}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconCheck size={16} style={{color: '#128C7E'}} /> Overall Correct</span><strong>{m.correct.toLocaleString()}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconCross size={16} style={{color: '#EF4444'}} /> Overall Wrong</span><strong>{(m.answered - m.correct).toLocaleString()}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconMinus size={16} style={{color: '#6b7280'}} /> Overall Skipped</span><strong>{totalSkipped.toLocaleString()}</strong></div>
                 </div>
                 <div className="wa-dd-grid-two" style={{ gridTemplateColumns: '1fr' }}>
                   <div className="wa-dd-col">
                     <h4>Subject Accuracy</h4>
                     <div className="wa-dd-table-wrapper">
                       <table className="wa-dd-table">
-                        <thead><tr><th>Subject</th><th style={{ textAlign: 'center' }}>Total</th><th style={{ textAlign: 'center' }}>✓ / ✗</th><th style={{ textAlign: 'right' }}>Accuracy</th></tr></thead>
+                        <thead>
+                          <tr>
+                            <th>Subject</th>
+                            <th style={{ textAlign: 'center' }}>Served</th>
+                            <th style={{ textAlign: 'center' }}>✓</th>
+                            <th style={{ textAlign: 'center' }}>✗</th>
+                            <th style={{ textAlign: 'center' }}>Skipped</th>
+                            <th style={{ textAlign: 'right' }}>Accuracy</th>
+                          </tr>
+                        </thead>
                         <tbody>
                           {m.subjectAccuracy.map((s, i) => (
                             <tr key={i}>
                               <td><strong>{s.subject}</strong></td>
                               <td style={{ textAlign: 'center' }}>{s.total}</td>
-                              <td style={{ textAlign: 'center' }}>
-                                <span style={{ color: '#2E7D32', fontWeight: 600 }}>{s.correct}</span>
-                                <span style={{ color: '#bbb' }}> / </span>
-                                <span style={{ color: '#C62828', fontWeight: 600 }}>{s.incorrect}</span>
-                              </td>
+                              <td style={{ textAlign: 'center', color: '#2E7D32', fontWeight: 600 }}>{s.correct}</td>
+                              <td style={{ textAlign: 'center', color: '#C62828', fontWeight: 600 }}>{s.incorrect}</td>
+                              <td style={{ textAlign: 'center', color: '#6b7280', fontWeight: 600 }}>{s.skipped || 0}</td>
                               <td style={{ textAlign: 'right' }}>
                                 <span className={`wa-dd-acc-badge ${s.accuracy >= 70 ? 'acc-high' : s.accuracy >= 40 ? 'acc-mid' : 'acc-low'}`}>{s.accuracy.toFixed(1)}%</span>
                               </td>
                             </tr>
                           ))}
-                          {m.subjectAccuracy.length === 0 && <tr><td colSpan="4" style={{ textAlign: 'center', color: '#999', padding: '16px' }}>No stats yet</td></tr>}
+                          {m.subjectAccuracy.length === 0 && <tr><td colSpan="6" style={{ textAlign: 'center', color: '#999', padding: '16px' }}>No stats yet</td></tr>}
                         </tbody>
                       </table>
                     </div>

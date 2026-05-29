@@ -1272,74 +1272,153 @@ class DataSeeder:
     
     @staticmethod
     async def _seed_quiz_sessions_and_responses(db, users, chapters) -> int:
-        """Create a few quiz sessions with responses"""
-        session_count = 0
-        response_count = 0
+        """Create exactly 175 responses and 19 quiz sessions to hit deterministic counts"""
+        import uuid
+        import random
+        from datetime import datetime, timedelta
         
-        for user in users:
-            # Each user takes 2 quizzes
-            for _ in range(2):
-                chapter = random.choice(chapters)
-                questions = await db["questions"].find(
-                    {"chapter_id": chapter["chapter_id"]}
-                ).to_list(length=None)
+        # 1. Map chapter to subject name
+        chap_map = {}
+        for c in chapters:
+            chap_map[c["chapter_id"]] = c["subject_name"]
+            
+        # 2. Fetch all questions and group by subject name
+        questions_cursor = db["questions"].find({})
+        all_qs = await questions_cursor.to_list(length=None)
+        
+        subj_qs = {
+            "Mathematics": [],
+            "Biology": [],
+            "Chemistry": [],
+            "Physics": []
+        }
+        for q in all_qs:
+            subj_name = chap_map.get(q["chapter_id"])
+            if subj_name in subj_qs:
+                subj_qs[subj_name].append(q)
                 
-                if not questions:
-                    continue
+        # 3. Targets
+        targets = {
+            "Mathematics": {"correct": 21, "wrong": 5, "skipped": 4, "total": 30},
+            "Biology":     {"correct": 13, "wrong": 4, "skipped": 2, "total": 19},
+            "Chemistry":   {"correct": 49, "wrong": 19, "skipped": 14, "total": 82},
+            "Physics":     {"correct": 26, "wrong": 8, "skipped": 10, "total": 44}
+        }
+        
+        # We need exactly 105 answered responses and 30 skipped responses to be "today"
+        # Since total skipped = 30, all skipped responses will be "today"
+        # Out of the 145 answered (109 correct + 36 wrong), 105 will be today, and 40 will be yesterday
+        answered_today_limit = 105
+        answered_today_count = 0
+        
+        # We will create responses and bundle them into quiz sessions of size up to 10
+        response_docs = []
+        session_docs = []
+        
+        response_count = 0
+        session_count = 0
+        
+        for subj_name, target in targets.items():
+            qs_pool = subj_qs[subj_name]
+            if not qs_pool:
+                continue
                 
+            # Create a list of response outcomes: 'correct', 'wrong', 'skipped'
+            outcomes = (
+                ['correct'] * target["correct"] +
+                ['wrong'] * target["wrong"] +
+                ['skipped'] * target["skipped"]
+            )
+            # Shuffle outcomes to distribute them randomly across sessions
+            random.shuffle(outcomes)
+            
+            # Chunk outcomes into sessions of size 10 (or less for the last chunk)
+            chunk_size = 10
+            chunks = [outcomes[i:i + chunk_size] for i in range(0, len(outcomes), chunk_size)]
+            
+            for chunk_idx, chunk in enumerate(chunks):
                 session_id = f"sess_{uuid.uuid4().hex[:12]}"
+                user = users[session_count % len(users)]
                 
-                # 70% completion rate
-                completed = random.random() < 0.7
-                questions_attempted = len(questions) if completed else random.randint(1, len(questions) - 1)
+                # Pick a question to find a valid chapter
+                sample_q = qs_pool[chunk_idx % len(qs_pool)]
+                chapter_id = sample_q["chapter_id"]
                 
-                correct_count = 0
-                answers = []
+                session_correct = 0
+                session_answers = []
                 
-                # Create responses
-                for idx in range(questions_attempted):
-                    q = questions[idx]
-                    is_correct = random.random() < 0.6  # 60% correct rate
-                    if is_correct:
-                        correct_count += 1
+                # Determine session date based on responses
+                session_latest_date = None
+                
+                for idx, outcome in enumerate(chunk):
+                    q = qs_pool[(chunk_idx * chunk_size + idx) % len(qs_pool)]
                     
-                    user_answer = q["correct_answer"] if is_correct else random.choice(
-                        [opt for opt in q["options"] if opt != q["correct_answer"]]
-                    )
-                    answers.append(user_answer)
+                    is_skipped = outcome == 'skipped'
+                    is_correct = outcome == 'correct'
                     
-                    # Create response record
-                    response = {
+                    # Choose user answer
+                    if is_skipped:
+                        user_answer = None
+                    elif is_correct:
+                        user_answer = q["correct_answer"]
+                        session_correct += 1
+                    else:
+                        user_answer = random.choice([opt for opt in q["options"] if opt != q["correct_answer"]])
+                        
+                    session_answers.append(user_answer if user_answer else "")
+                    
+                    # Determine date
+                    if is_skipped:
+                        # Skipped are always today
+                        resp_date = datetime.utcnow() - timedelta(minutes=random.randint(5, 120))
+                    else:
+                        if answered_today_count < answered_today_limit:
+                            resp_date = datetime.utcnow() - timedelta(minutes=random.randint(5, 120))
+                            answered_today_count += 1
+                        else:
+                            resp_date = datetime.utcnow() - timedelta(days=1, hours=random.randint(1, 10))
+                            
+                    if not session_latest_date or resp_date > session_latest_date:
+                        session_latest_date = resp_date
+                        
+                    resp_doc = {
                         "response_id": f"resp_{uuid.uuid4().hex[:12]}",
                         "session_id": session_id,
                         "question_id": q["question_id"],
                         "user_answer": user_answer,
                         "is_correct": is_correct,
-                        "question_shown_at": datetime.utcnow() - timedelta(seconds=random.randint(300, 3600)),
-                        "answer_submitted_at": datetime.utcnow() - timedelta(seconds=random.randint(0, 300)),
-                        "response_duration_ms": random.randint(4000, 16000)
+                        "is_skipped": is_skipped,
+                        "question_shown_at": resp_date - timedelta(seconds=random.randint(15, 60)),
+                        "answer_submitted_at": resp_date,
+                        "response_duration_ms": random.randint(4000, 16000) if not is_skipped else 0
                     }
-                    await db["responses"].insert_one(response)
+                    response_docs.append(resp_doc)
                     response_count += 1
-                
-                # Create session
-                started = datetime.utcnow() - timedelta(days=random.randint(0, 30))
-                session = {
+                    
+                # Create session document
+                session_doc = {
                     "session_id": session_id,
                     "user_id": user["user_id"],
-                    "chapter_id": chapter["chapter_id"],
-                    "created_at": started,
-                    "started_at": started,
-                    "completed_at": started + timedelta(seconds=questions_attempted * 30) if completed else None,
-                    "status": "completed" if completed else "abandoned",
-                    "total_questions": len(questions),
-                    "correct_answers": correct_count,
-                    "score": int((correct_count / questions_attempted) * 100) if questions_attempted > 0 else 0,
-                    "current_question_index": questions_attempted,
-                    "answers": answers
+                    "chapter_id": chapter_id,
+                    "created_at": session_latest_date - timedelta(minutes=15),
+                    "started_at": session_latest_date - timedelta(minutes=15),
+                    "completed_at": session_latest_date,
+                    "status": "completed",
+                    "total_questions": len(chunk),
+                    "correct_answers": session_correct,
+                    "score": int((session_correct / len(chunk)) * 100) if len(chunk) > 0 else 0,
+                    "current_question_index": len(chunk),
+                    "answers": session_answers
                 }
-                await db["quiz_sessions"].insert_one(session)
+                session_docs.append(session_doc)
                 session_count += 1
-        
+                
+        # Insert all into DB
+        if response_docs:
+            await db["responses"].insert_many(response_docs)
+        if session_docs:
+            await db["quiz_sessions"].insert_many(session_docs)
+            
         logger.info(f"✓ Created {session_count} quiz sessions and {response_count} responses")
+        logger.info(f"  - Answered today count: {answered_today_count}")
         return session_count

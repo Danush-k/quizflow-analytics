@@ -32,10 +32,11 @@ class AnalyticsService:
         total_sessions  = await db["quiz_sessions"].count_documents({})
         completed       = await db["quiz_sessions"].count_documents({"status": "completed"})
         total_responses = await db["responses"].count_documents({})
-        correct         = await db["responses"].count_documents({"is_correct": True})
+        total_answered  = await db["responses"].count_documents({"is_skipped": {"$ne": True}})
+        correct         = await db["responses"].count_documents({"is_correct": True, "is_skipped": {"$ne": True}})
 
         completion_rate = round((completed / total_sessions * 100), 2) if total_sessions > 0 else 0
-        overall_accuracy = round((correct / total_responses * 100), 2) if total_responses > 0 else 0
+        overall_accuracy = round((correct / total_answered * 100), 2) if total_answered > 0 else 0
 
         # Average response time
         rt_pipeline = [{"$group": {"_id": None, "avg": {"$avg": "$response_duration_ms"}}}]
@@ -84,7 +85,7 @@ class AnalyticsService:
             "completed_sessions": completed,
             "completion_rate_percent": completion_rate,
             "total_questions_served": total_responses,
-            "total_responses": total_responses,
+            "total_responses": total_answered,
             "overall_accuracy": overall_accuracy,
             "avg_response_time_ms": avg_rt,
             "peak_hour": peak_hour,
@@ -184,8 +185,15 @@ class AnalyticsService:
         """
         db = await get_db()
 
-        total   = await db["responses"].count_documents({})
-        correct = await db["responses"].count_documents({"is_correct": True})
+        total = await db["responses"].count_documents({"is_skipped": {"$ne": True}})
+        correct = await db["responses"].count_documents({"is_correct": True, "is_skipped": {"$ne": True}})
+        
+        today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        answered_today = await db["responses"].count_documents({
+            "is_skipped": {"$ne": True},
+            "answer_submitted_at": {"$gte": today_start}
+        })
+        
         accuracy = round((correct / total * 100), 2) if total > 0 else 0
 
         return {
@@ -193,6 +201,7 @@ class AnalyticsService:
             "correct": correct,
             "incorrect": total - correct,
             "accuracy": accuracy,
+            "answered_today": answered_today,
         }
 
     # ─────────────────────────────────────────────────────────────
@@ -465,14 +474,20 @@ class AnalyticsService:
             {"$group": {
                 "_id": "$s.name",
                 "total":   {"$sum": 1},
-                "correct": {"$sum": {"$cond": [{"$eq": ["$is_correct", True]}, 1, 0]}}
+                "correct": {"$sum": {"$cond": [{"$eq": ["$is_correct", True]}, 1, 0]}},
+                "skipped": {"$sum": {"$cond": [{"$eq": ["$is_skipped", True]}, 1, 0]}}
             }},
             {"$project": {
                 "subject":   "$_id",
                 "total":     1,
                 "correct":   1,
-                "incorrect": {"$subtract": ["$total", "$correct"]},
-                "accuracy":  {"$round": [{"$multiply": [{"$divide": ["$correct", "$total"]}, 100]}, 2]},
+                "skipped":   1,
+                "incorrect": {"$subtract": [{"$subtract": ["$total", "$correct"]}, "$skipped"]},
+                "accuracy":  {"$cond": [
+                    {"$gt": [{"$subtract": ["$total", "$skipped"]}, 0]},
+                    {"$round": [{"$multiply": [{"$divide": ["$correct", {"$subtract": ["$total", "$skipped"]}]}, 100]}, 2]},
+                    0
+                ]},
                 "_id":       0
             }},
             {"$sort": {"accuracy": -1}}
@@ -496,14 +511,20 @@ class AnalyticsService:
             {"$group": {
                 "_id": "$c.name",
                 "total":   {"$sum": 1},
-                "correct": {"$sum": {"$cond": [{"$eq": ["$is_correct", True]}, 1, 0]}}
+                "correct": {"$sum": {"$cond": [{"$eq": ["$is_correct", True]}, 1, 0]}},
+                "skipped": {"$sum": {"$cond": [{"$eq": ["$is_skipped", True]}, 1, 0]}}
             }},
             {"$project": {
                 "chapter":   "$_id",
                 "total":     1,
                 "correct":   1,
-                "incorrect": {"$subtract": ["$total", "$correct"]},
-                "accuracy":  {"$round": [{"$multiply": [{"$divide": ["$correct", "$total"]}, 100]}, 2]},
+                "skipped":   1,
+                "incorrect": {"$subtract": [{"$subtract": ["$total", "$correct"]}, "$skipped"]},
+                "accuracy":  {"$cond": [
+                    {"$gt": [{"$subtract": ["$total", "$skipped"]}, 0]},
+                    {"$round": [{"$multiply": [{"$divide": ["$correct", {"$subtract": ["$total", "$skipped"]}]}, 100]}, 2]},
+                    0
+                ]},
                 "_id":       0
             }},
             {"$sort": {"accuracy": -1}}

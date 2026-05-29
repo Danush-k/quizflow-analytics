@@ -30,6 +30,7 @@ class QuestionsAnswered(BaseModel):
     correct: int = Field(..., description="Count of correct responses")
     incorrect: int = Field(..., description="Count of incorrect responses")
     accuracy: float = Field(..., description="Overall accuracy percentage (0–100)")
+    answered_today: int = Field(0, description="Count of answered questions today")
 
 
 class AvgResponseTime(BaseModel):
@@ -88,6 +89,7 @@ class SubjectAccuracy(BaseModel):
     total: int = Field(..., description="Total questions answered in this subject")
     correct: int = Field(..., description="Correct answers in this subject")
     incorrect: int = Field(..., description="Incorrect answers in this subject")
+    skipped: int = Field(0, description="Skipped questions in this subject")
     accuracy: float = Field(..., description="Accuracy percentage for this subject (0–100)")
 
 
@@ -96,6 +98,7 @@ class ChapterAccuracy(BaseModel):
     total: int = Field(..., description="Total questions answered in this chapter")
     correct: int = Field(..., description="Correct answers in this chapter")
     incorrect: int = Field(..., description="Incorrect answers in this chapter")
+    skipped: int = Field(0, description="Skipped questions in this chapter")
     accuracy: float = Field(..., description="Accuracy percentage for this chapter (0–100)")
 
 
@@ -114,3 +117,6 @@ class AnalyticsOverview(BaseModel):
     avg_response_time_ms: int = Field(..., description="Mean per-question response time in ms")
     peak_hour: Optional[int] = Field(None, description="Most active hour of day (IST, 0–23)")
     top_subject: Optional[str] = Field(None, description="Subject with most quiz activity")
+
+
+AnalyticsResponse = AnalyticsOverview
