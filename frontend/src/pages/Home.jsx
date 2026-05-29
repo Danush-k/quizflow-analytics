@@ -60,25 +60,45 @@ function Home() {
           <p className="features-sub">Engineered to optimize your learning workflow through micro-active engagement.</p>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon-wrap">⚡</div>
+              <div className="feature-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </div>
               <h3>Lightning Fast</h3>
               <p>One question at a time for better focus, reducing test anxiety and improving cognitive retention.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon-wrap">📈</div>
+              <div className="feature-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                  <polyline points="17 6 23 6 23 12" />
+                </svg>
+              </div>
               <h3>Track Progress</h3>
               <p>Explore high-fidelity visual stats grids and detailed performance analytics in real-time.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon-wrap">🎯</div>
+              <div className="feature-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="2" />
+                </svg>
+              </div>
               <h3>Comprehensive</h3>
               <p>Dive deep into custom exams, multiple subjects, and curated chapters crafted by educational experts.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon-wrap">📱</div>
+              <div className="feature-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                  <line x1="12" y1="18" x2="12.01" y2="18" />
+                </svg>
+              </div>
               <h3>Mobile Friendly</h3>
               <p>Enjoy a responsive design optimized for seamless practice on desktop, tablets, and smartphones.</p>
             </div>

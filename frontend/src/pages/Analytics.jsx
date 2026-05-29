@@ -26,6 +26,122 @@ const fmtMs = (ms) => {
   return `${Math.round(ms)}ms`;
 };
 
+// ─── Inline SVG Icons ──────────────────────────────────────────────────────────
+const IconUsers = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M17 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    <path d="M21 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M23 21v-2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M9 15a6 6 0 0 0-6 6v0" />
+  </svg>
+);
+
+const IconTrend = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+    <polyline points="17 6 23 6 23 12" />
+  </svg>
+);
+
+const IconTarget = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
+const IconClock = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const IconBook = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+    <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z" />
+  </svg>
+);
+
+const IconCheck = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const IconPuzzle = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+    <path d="M2 17l10 5 10-5" />
+    <path d="M2 12l10 5 10-5" />
+  </svg>
+);
+
+const IconCalendar = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+  </svg>
+);
+
+const IconFlame = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+  </svg>
+);
+
+const IconSnowflake = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <line x1="12" y1="2" x2="12" y2="22" />
+    <line x1="20" y1="16" x2="16" y2="12" />
+    <line x1="20" y1="8" x2="16" y2="12" />
+    <line x1="4" y1="8" x2="8" y2="12" />
+    <line x1="4" y1="16" x2="8" y2="12" />
+    <line x1="16" y1="4" x2="12" y2="8" />
+    <line x1="8" y1="4" x2="12" y2="8" />
+    <line x1="8" y1="20" x2="12" y2="16" />
+    <line x1="16" y1="20" x2="12" y2="16" />
+  </svg>
+);
+
+const IconChart = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="18" y1="20" x2="18" y2="10" />
+    <line x1="12" y1="20" x2="12" y2="4" />
+    <line x1="6" y1="20" x2="6" y2="14" />
+  </svg>
+);
+
+const IconLightbulb = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A7 7 0 0 0 4 8c0 1.3.5 2.6 1.5 3.5.7.8 1.3 1.5 1.5 2.5h6z" />
+    <path d="M9 18h6" />
+    <path d="M10 22h4" />
+  </svg>
+);
+
+const IconWarning = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+const IconEmpty = ({ size = 32 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', margin: '0 auto 12px' }}>
+    <circle cx="12" cy="12" r="10" />
+    <line x1="8" y1="12" x2="16" y2="12" />
+  </svg>
+);
+
 // ─── Animated counter hook ────────────────────────────────────────────────────
 function useCountUp(target, duration = 1000) {
   const [count, setCount] = useState(0);
@@ -107,7 +223,7 @@ const LoadingScreen = () => (
   <div className="wa-loading-overlay">
     <div className="wa-spinner">
       <div className="wa-spinner-ring" />
-      <span className="wa-spinner-icon">📊</span>
+      <span className="wa-spinner-icon"><IconChart size={24} /></span>
     </div>
     <p>Loading analytics…</p>
   </div>
@@ -116,7 +232,7 @@ const LoadingScreen = () => (
 // ─── Empty chart placeholder ──────────────────────────────────────────────────
 const EmptyChart = ({ msg = 'No data yet' }) => (
   <div className="wa-empty-chart">
-    <span>📭</span>
+    <IconEmpty />
     <p>{msg}</p>
   </div>
 );
@@ -270,10 +386,10 @@ export default function Analytics() {
       <div className="wa-analytics">
         <div className="container">
           <div className="wa-error-card">
-            <div className="wa-error-icon">⚠️</div>
+            <div className="wa-error-icon"><IconWarning size={32} /></div>
             <h2>Couldn't load analytics</h2>
             <p>{error}</p>
-            <button className="wa-btn-primary" onClick={() => fetchAll(false)}>🔄 Retry</button>
+            <button className="wa-btn-primary" onClick={() => fetchAll(false)}>Retry</button>
           </div>
         </div>
       </div>
@@ -320,7 +436,7 @@ export default function Analytics() {
         {/* ═══ HEADER ═══════════════════════════════════════════════════════ */}
         <div className="wa-header">
           <div className="wa-header-brand">
-            <div className="wa-header-logo">📊</div>
+            <div className="wa-header-logo"><IconChart size={28} /></div>
             <div>
               <h1>Analytics Dashboard</h1>
               <p className="wa-header-sub">
@@ -360,9 +476,9 @@ export default function Analytics() {
         {/* ═══ CATEGORY NAVIGATION ══════════════════════════════════════════ */}
         <div className="wa-analytics-cat-nav">
           {[
-            { id: 'overview',    icon: '📊', label: 'Traffic Overview' },
-            { id: 'performance', icon: '🎯', label: 'Academic Performance' },
-            { id: 'retention',   icon: '📉', label: 'Friction & Retention' },
+            { id: 'overview',    icon: <IconChart />, label: 'Traffic Overview' },
+            { id: 'performance', icon: <IconTarget />, label: 'Academic Performance' },
+            { id: 'retention',   icon: <IconTrend />, label: 'Friction & Retention' },
           ].map(cat => (
             <button
               key={cat.id}
@@ -384,20 +500,20 @@ export default function Analytics() {
           <div className="wa-panel-anim">
 
             <div className="wa-stats-grid">
-              <StatCard index={0} icon="👥" label="Daily Active Users"
+              <StatCard index={0} icon={<IconUsers />} label="Daily Active Users"
                 value={m.dauToday} unit="users today" color={WA_DARK} />
-              <StatCard index={1} icon="📈" label="Weekly Active Users"
+              <StatCard index={1} icon={<IconTrend />} label="Weekly Active Users"
                 value={m.wauTotal} unit="users/week" color={WA_MID} />
-              <StatCard index={2} icon="🎯" label="Completion Rate"
+              <StatCard index={2} icon={<IconTarget />} label="Completion Rate"
                 value={m.completion} unit="%" color="#F4A261"
                 sub={`${m.completedSessions} / ${m.totalSessions} sessions`} />
-              <StatCard index={3} icon="⏰" label="Peak Hour"
+              <StatCard index={3} icon={<IconClock />} label="Peak Hour"
                 value={formatHour(m.peakHour)} unit="" color="#A8DADC" />
             </div>
 
             {/* DAU Trend (Full Width) */}
             <div className="wa-charts-row">
-              <Section icon="👥" title="Daily Active Users (Last 14 Days)"
+              <Section icon={<IconUsers />} title="Daily Active Users (Last 14 Days)"
                 className="wa-section-full"
                 badge={`Today: ${m.dauToday}`}>
                 {m.dauChart.length === 0
@@ -427,7 +543,7 @@ export default function Analytics() {
 
             {/* Peak Hours Trend (Full Width) */}
             <div className="wa-charts-row">
-              <Section icon="⏰" title="Today's Activity by Hour"
+              <Section icon={<IconClock />} title="Today's Activity by Hour"
                 className="wa-section-full"
                 badge={`Peak: ${formatHour(m.peakHour)}`}>
                 {chartHours.every(h => h.activity === 0)
@@ -455,7 +571,7 @@ export default function Analytics() {
 
             {/* Weekly Trend */}
             {m.wauChart.length > 0 && (
-              <Section icon="📈" title="Weekly Active Users Trend" className="wa-section-full">
+              <Section icon={<IconTrend />} title="Weekly Active Users Trend" className="wa-section-full">
                 <ResponsiveContainer width="100%" height={200}>
                   <BarChart data={m.wauChart} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
@@ -478,26 +594,26 @@ export default function Analytics() {
           <div className="wa-panel-anim">
 
             <div className="wa-stats-grid">
-              <StatCard index={0} icon="📚" label="Questions Served"
+              <StatCard index={0} icon={<IconBook />} label="Questions Served"
                 value={m.served} unit="total" color="#4b5563"
                 sub={`${m.servedToday.toLocaleString()} today`}
                 onClick={() => setExpandedSection(expandedSection === 'served' ? null : 'served')}
                 active={expandedSection === 'served'} />
-              <StatCard index={1} icon="✅" label="Questions Answered"
+              <StatCard index={1} icon={<IconCheck />} label="Questions Answered"
                 value={m.answered} unit="total" color={WA_MID}
                 sub={`${m.correct.toLocaleString()} correct`}
                 onClick={() => setExpandedSection(expandedSection === 'answered' ? null : 'answered')}
                 active={expandedSection === 'answered'} />
-              <StatCard index={2} icon="⏱️" label="Avg Response Time"
+              <StatCard index={2} icon={<IconClock />} label="Avg Response Time"
                 value={fmtMs(m.avgTime)} unit="" color="#4b5563" />
-              <StatCard index={3} icon="🧩" label="Avg Q / Session"
+              <StatCard index={3} icon={<IconPuzzle />} label="Avg Q / Session"
                 value={m.avgQ} unit="questions" color="#4b5563" />
             </div>
 
             {/* Default State: Answer Accuracy Chart */}
             {expandedSection === null && (
               <div className="wa-panel-anim" style={{ marginTop: '20px' }}>
-                <Section icon="🎯" title="Answer Accuracy Overview" className="wa-section-full"
+                <Section icon={<IconTarget />} title="Answer Accuracy Overview" className="wa-section-full"
                   badge={`${m.accuracy}% correct`}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '40px', flexWrap: 'wrap', padding: '20px 0' }}>
                     <div className="wa-donut-wrapper" style={{ margin: 0 }}>
@@ -531,7 +647,7 @@ export default function Analytics() {
             {expandedSection === 'served' && (
               <div className="wa-drilldown-panel served wa-panel-anim">
                 <div className="wa-drilldown-header">
-                  <span className="wa-dd-icon">📚</span>
+                  <span className="wa-dd-icon"><IconBook /></span>
                   <div>
                     <h3>Questions Served — Detailed Breakdown</h3>
                     <p>Granular distribution across subjects, chapters, exams, and difficulty tiers.</p>
@@ -539,9 +655,9 @@ export default function Analytics() {
                   <button className="wa-dd-close" onClick={() => setExpandedSection(null)}>✕</button>
                 </div>
                 <div className="wa-dd-summary-strip">
-                  <div className="wa-dd-summary-card"><span>🔥 Most Served Chapter</span><strong>{mostServedChapter}</strong></div>
-                  <div className="wa-dd-summary-card"><span>❄️ Least Served Chapter</span><strong>{leastServedChapter}</strong></div>
-                  <div className="wa-dd-summary-card"><span>📅 Served Today</span><strong>{m.servedToday.toLocaleString()} questions</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconFlame size={16} /> Most Served Chapter</span><strong>{mostServedChapter}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconSnowflake size={16} /> Least Served Chapter</span><strong>{leastServedChapter}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconCalendar size={16} /> Served Today</span><strong>{m.servedToday.toLocaleString()} questions</strong></div>
                 </div>
                 <div className="wa-dd-grid-four">
                   <div className="wa-dd-col">
@@ -607,7 +723,7 @@ export default function Analytics() {
             {expandedSection === 'answered' && (
               <div className="wa-drilldown-panel answered wa-panel-anim">
                 <div className="wa-drilldown-header">
-                  <span className="wa-dd-icon">✅</span>
+                  <span className="wa-dd-icon"><IconCheck /></span>
                   <div>
                     <h3>Accuracy Deep Dive</h3>
                     <p>Subject accuracy breakdown across all exam sessions.</p>
@@ -615,8 +731,8 @@ export default function Analytics() {
                   <button className="wa-dd-close" onClick={() => setExpandedSection(null)}>✕</button>
                 </div>
                 <div className="wa-dd-summary-strip" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                  <div className="wa-dd-summary-card"><span>💪 Strongest Subject</span><strong>{strongestSubject ? `${strongestSubject.subject} (${strongestSubject.accuracy.toFixed(1)}%)` : 'N/A'}</strong></div>
-                  <div className="wa-dd-summary-card"><span>⚠️ Weakest Subject</span><strong>{weakestSubject ? `${weakestSubject.subject} (${weakestSubject.accuracy.toFixed(1)}%)` : 'N/A'}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconFlame size={16} style={{color: '#25D366'}} /> Strongest Subject</span><strong>{strongestSubject ? `${strongestSubject.subject} (${strongestSubject.accuracy.toFixed(1)}%)` : 'N/A'}</strong></div>
+                  <div className="wa-dd-summary-card"><span><IconWarning size={16} style={{color: '#EF4444'}} /> Weakest Subject</span><strong>{weakestSubject ? `${weakestSubject.subject} (${weakestSubject.accuracy.toFixed(1)}%)` : 'N/A'}</strong></div>
                 </div>
                 <div className="wa-dd-grid-two" style={{ gridTemplateColumns: '1fr' }}>
                   <div className="wa-dd-col">
@@ -655,7 +771,7 @@ export default function Analytics() {
         {activeCategory === 'retention' && (
           <div className="wa-panel-anim">
             <div className="wa-charts-row">
-              <Section icon="🎯" title="Session Completion" className="wa-chart-section">
+              <Section icon={<IconTarget />} title="Session Completion" className="wa-chart-section">
                 {(() => {
                   const pct      = Math.min(m.completion, 100);
                   const r        = 72;
@@ -717,7 +833,7 @@ export default function Analytics() {
               </Section>
 
               <Section 
-                icon="📉" 
+                icon={<IconTrend />} 
                 title="Drop-off by Question" 
                 className="wa-chart-section grow-2"
                 badge={`Total Starts: ${m.totalSessions}`}

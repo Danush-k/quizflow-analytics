@@ -3,6 +3,120 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import '../styles/Results.css';
 
+// ─── Inline SVG Icons ──────────────────────────────────────────────────────────
+const IconWarning = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+const IconAward = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="12" cy="8" r="7" />
+    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+  </svg>
+);
+
+const IconTrendUp = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+    <polyline points="17 6 23 6 23 12" />
+  </svg>
+);
+
+const IconTarget = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
+const IconFlame = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+  </svg>
+);
+
+const IconClock = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const IconLightbulb = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A7 7 0 0 0 4 8c0 1.3.5 2.6 1.5 3.5.7.8 1.3 1.5 1.5 2.5h6z" />
+    <path d="M9 18h6" />
+    <path d="M10 22h4" />
+  </svg>
+);
+
+const IconSearch = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+  </svg>
+);
+
+const IconRefresh = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polyline points="23 4 23 10 17 10" />
+    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+  </svg>
+);
+
+const IconClipboard = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+  </svg>
+);
+
+const IconChart = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="18" y1="20" x2="18" y2="10" />
+    <line x1="12" y1="20" x2="12" y2="4" />
+    <line x1="6" y1="20" x2="6" y2="14" />
+  </svg>
+);
+
+const IconCheck = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const IconCross = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+const IconBrain = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z" />
+    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z" />
+  </svg>
+);
+
+const IconZap = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+const IconFlag = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+    <line x1="4" y1="22" x2="4" y2="15" />
+  </svg>
+);
+
 // ─── WhatsApp-themed Color Palette ──────────────────────────────────────────
 const WA_DARK        = '#075E54';
 const WA_MID         = '#128C7E';
@@ -499,7 +613,7 @@ function Results() {
     return (
       <div className="wa-res-error-screen">
         <div className="wa-res-error-card">
-          <span>⚠️</span>
+          <span><IconWarning size={32} /></span>
           <h3>Couldn't Load Results Workspace</h3>
           <p>{error || 'An unexpected error occurred.'}</p>
           <button onClick={() => navigate('/exams')}>Return to Exams</button>
@@ -513,11 +627,11 @@ function Results() {
     : 0;
 
   // ─── PERFORMANCE LEVEL ──────────────────────────────────────────────────────
-  let perfLevel = 'Developing 🔴';
+  let perfLevel = <><IconFlame size={16} /> Developing</>;
   let perfClass = 'lvl-beginner';
-  if (scorePct >= 80) { perfLevel = 'Mastery 🏆'; perfClass = 'lvl-expert'; }
-  else if (scorePct >= 60) { perfLevel = 'Advanced 🔵'; perfClass = 'lvl-advanced'; }
-  else if (scorePct >= 40) { perfLevel = 'Proficient 🟡'; perfClass = 'lvl-intermediate'; }
+  if (scorePct >= 80) { perfLevel = <><IconAward size={16} /> Mastery</>; perfClass = 'lvl-expert'; }
+  else if (scorePct >= 60) { perfLevel = <><IconTrendUp size={16} /> Advanced</>; perfClass = 'lvl-advanced'; }
+  else if (scorePct >= 40) { perfLevel = <><IconTarget size={16} /> Proficient</>; perfClass = 'lvl-intermediate'; }
 
   // ─── BEHAVIORAL & TIME STATISTICS COMPILATION ────────────────────────────────
   const trackingObj = trackingData?.tracking || {};
@@ -563,21 +677,21 @@ function Results() {
   // ─── DYNAMIC IMPROVEMENT SUGGESTIONS ────────────────────────────────────────
   const suggestions = [];
   if (scorePct < 50) {
-    suggestions.push(`💡 Need improvement in core concepts. Focus heavily on basic definitions before taking more advanced tests.`);
+    suggestions.push(<><IconLightbulb size={16} style={{ marginRight: 8, color: '#FFC107' }} /> Need improvement in core concepts. Focus heavily on basic definitions before taking more advanced tests.</>);
   } else {
-    suggestions.push(`🏆 Outstanding score! You have a highly complete grip on this specific chapter topic.`);
+    suggestions.push(<><IconAward size={16} style={{ marginRight: 8, color: '#4CAF50' }} /> Outstanding score! You have a highly complete grip on this specific chapter topic.</>);
   }
 
   if (avgResponseMs > 25000) {
-    suggestions.push(`⏱️ High response times (${formatMs(avgResponseMs)} avg). Try speed runs to complete tests faster under high pressure.`);
+    suggestions.push(<><IconClock size={16} style={{ marginRight: 8, color: '#FF9800' }} /> High response times ({formatMs(avgResponseMs)} avg). Try speed runs to complete tests faster under high pressure.</>);
   } else if (scorePct >= 70 && avgResponseMs < 10000) {
-    suggestions.push(`⚡ Lightning-fast speed and highly accurate results! Excellent execution.`);
+    suggestions.push(<><IconZap size={16} style={{ marginRight: 8, color: '#25D366' }} /> Lightning-fast speed and highly accurate results! Excellent execution.</>);
   } else if (scorePct < 60 && avgResponseMs < 10000) {
-    suggestions.push(`⚠️ Speed is high but accuracy is low. Try reviewing your choices for a few extra seconds before finalizing.`);
+    suggestions.push(<><IconWarning size={16} style={{ marginRight: 8, color: '#F44336' }} /> Speed is high but accuracy is low. Try reviewing your choices for a few extra seconds before finalizing.</>);
   }
 
   if (answerChanges > 3) {
-    suggestions.push(`🤔 Multiple choice swaps (${answerChanges} changes). Research shows your initial intuition is correct in 70% of cases!`);
+    suggestions.push(<><IconBrain size={16} style={{ marginRight: 8, color: '#9C27B0' }} /> Multiple choice swaps ({answerChanges} swaps). Research shows your initial intuition is correct in 70% of cases!</>);
   }
 
   return (
@@ -603,8 +717,12 @@ function Results() {
 
             <div className="wa-summary-column correct-wrong">
               <span className="wa-summary-title">RESOLVED</span>
-              <p>🟢 <strong>{results.correct_answers}</strong> Correct</p>
-              <p>🔴 <strong>{results.total_questions - results.correct_answers}</strong> Wrong</p>
+              <p style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <IconCheck size={14} style={{ color: '#25D366' }} /> <strong>{results.correct_answers}</strong> Correct
+              </p>
+              <p style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <IconCross size={14} style={{ color: '#E53935' }} /> <strong>{results.total_questions - results.correct_answers}</strong> Wrong
+              </p>
             </div>
 
             <div className="wa-summary-divider" />
@@ -637,19 +755,19 @@ function Results() {
               className={`wa-tab-btn ${activeTab === 'summary' ? 'active' : ''}`}
               onClick={() => setActiveTab('summary')}
             >
-              📋 Score Summary
+              <IconClipboard size={16} /> Score Summary
             </button>
             <button 
               className={`wa-tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
               onClick={() => setActiveTab('analytics')}
             >
-              📊 Performance Analytics
+              <IconChart size={16} /> Performance Analytics
             </button>
             <button 
               className={`wa-tab-btn ${activeTab === 'review' ? 'active' : ''}`}
               onClick={() => setActiveTab('review')}
             >
-              🔍 Review Answers
+              <IconSearch size={16} /> Review Answers
             </button>
           </div>
         </div>
@@ -678,17 +796,17 @@ function Results() {
                   
                   <div className="wa-summary-ctas">
                     <button className="wa-cta-btn cta-primary" onClick={() => setActiveTab('review')}>
-                      🔍 Detailed Answer Review
+                      <IconSearch size={16} /> Detailed Answer Review
                     </button>
                     <button className="wa-cta-btn cta-secondary" onClick={() => navigate('/exams')}>
-                      🔄 Take New Test Chapter
+                      <IconRefresh size={16} /> Take New Test Chapter
                     </button>
                   </div>
                 </div>
 
                 {/* Performance Projection Meter & Cards */}
                 <div className="wa-summary-projection-card">
-                  <h3>📊 Performance Level Meter</h3>
+                  <h3><IconChart size={18} /> Performance Level Meter</h3>
                   <p className="wa-proj-subtitle">Your exact scoring location mapped across EdTech brackets.</p>
                   
                   <div className="wa-spectrum-meter-wrap">
@@ -798,7 +916,7 @@ function Results() {
                 {/* Accuracy */}
                 <div className="wa-res-pg-block">
                   <div className="wa-res-pg-header">
-                    <span className="wa-res-pg-icon">🎯</span>
+                    <span className="wa-res-pg-icon"><IconTarget size={20} /></span>
                     <span className="wa-res-pg-title">Accuracy</span>
                   </div>
                   <div className="wa-res-pg-primary">
@@ -832,7 +950,7 @@ function Results() {
                 {/* Behavior */}
                 <div className="wa-res-pg-block">
                   <div className="wa-res-pg-header">
-                    <span className="wa-res-pg-icon">🧠</span>
+                    <span className="wa-res-pg-icon"><IconBrain size={20} /></span>
                     <span className="wa-res-pg-title">Behavior</span>
                   </div>
                   <div className="wa-res-pg-chip">
@@ -864,7 +982,7 @@ function Results() {
                 {/* Response */}
                 <div className="wa-res-pg-block">
                   <div className="wa-res-pg-header">
-                    <span className="wa-res-pg-icon">⚡</span>
+                    <span className="wa-res-pg-icon"><IconZap size={20} /></span>
                     <span className="wa-res-pg-title">Response</span>
                   </div>
                   <div className="wa-res-pg-primary">
@@ -896,7 +1014,7 @@ function Results() {
                 {/* Time Insights */}
                 <div className="wa-res-pg-block">
                   <div className="wa-res-pg-header">
-                    <span className="wa-res-pg-icon">🕐</span>
+                    <span className="wa-res-pg-icon"><IconClock size={20} /></span>
                     <span className="wa-res-pg-title">Time Insights</span>
                   </div>
                   <div className="wa-res-pg-chip">
@@ -935,10 +1053,10 @@ function Results() {
               {/* ── Guidance strip (compact) ─────────────────────────────── */}
               {suggestions.length > 0 && (
                 <div className="wa-res-guidance-bar">
-                  <span className="wa-res-guidance-icon">💡</span>
+                  <span className="wa-res-guidance-icon"><IconLightbulb size={20} /></span>
                   <ul className="wa-res-guidance-list">
                     {suggestions.map((s, i) => (
-                      <li key={i}>{s.replace(/^💡|^⏱️|^⚡|^⚠️|^🤔|^🏆/, '').trim()}</li>
+                      <li key={i} style={{ display: 'flex', alignItems: 'center' }}>{s}</li>
                     ))}
                   </ul>
                 </div>
@@ -1031,7 +1149,7 @@ function Results() {
                     {/* Explanations Inside Discussion Thread (Chat Bubble Style) */}
                     <div className="wa-tutor-bubble-wrapper">
                       <div className="wa-tutor-avatar">
-                        <span className="wa-tutor-avatar-icon">💡</span>
+                        <span className="wa-tutor-avatar-icon"><IconLightbulb size={18} /></span>
                       </div>
                       <div className="wa-center-discussion-block wa-ai-tutor-bubble">
                         <div className="wa-disc-header-row">
@@ -1060,7 +1178,7 @@ function Results() {
                 {/* 3. RIGHT PANEL: INSIGHTS & TELEMETRY */}
                 <aside className="wa-review-right-telemetry">
                   <div className="wa-telemetry-header">
-                    <h4>📋 Telemetry Details</h4>
+                    <h4 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><IconClipboard size={16} /> Telemetry Details</h4>
                   </div>
                   
                   {(() => {
@@ -1088,15 +1206,15 @@ function Results() {
 
                         <div className="wa-telemetry-item-row">
                           <span className="wa-t-lbl">Marked for Review</span>
-                          <span className="wa-t-val" style={{ color: track?.markedForReview ? '#FF9800' : '#888' }}>
-                            {track?.markedForReview ? 'Yes 🚩' : 'No'}
+                          <span className="wa-t-val" style={{ color: track?.markedForReview ? '#FF9800' : '#888', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            {track?.markedForReview ? <>Yes <IconFlag size={14} /></> : 'No'}
                           </span>
                         </div>
 
                         <div className="wa-telemetry-item-row">
                           <span className="wa-t-lbl">Solved Status</span>
-                          <span className="wa-t-val" style={{ color: currentResp?.is_correct ? '#25D366' : '#E53935', fontWeight: 800 }}>
-                            {currentResp?.is_correct ? 'CORRECT ✓' : 'WRONG ✗'}
+                          <span className="wa-t-val" style={{ color: currentResp?.is_correct ? '#25D366' : '#E53935', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            {currentResp?.is_correct ? <>CORRECT <IconCheck size={14} /></> : <>WRONG <IconCross size={14} /></>}
                           </span>
                         </div>
 

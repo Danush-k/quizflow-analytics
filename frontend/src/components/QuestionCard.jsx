@@ -189,7 +189,12 @@ const QuestionCard = ({
             }}
             aria-label={isMarked ? 'Unmark for review' : 'Mark for review'}
           >
-            <span>🚩</span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}>
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                <line x1="4" y1="22" x2="4" y2="15" />
+              </svg>
+            </span>
             <span>{isMarked ? 'Unmark' : 'Mark for Review'}</span>
           </button>
 
@@ -209,7 +214,12 @@ const QuestionCard = ({
               }}
               aria-label="Clear answer"
             >
-              <span>✕</span>
+              <span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </span>
               <span>Clear Answer</span>
             </button>
           )}

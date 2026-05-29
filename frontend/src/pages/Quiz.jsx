@@ -3,6 +3,67 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import '../styles/Quiz.css';
 
+// ─── Inline SVG Icons ──────────────────────────────────────────────────────────
+const IconWarning = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+const IconClipboard = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+  </svg>
+);
+
+const IconList = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="8" y1="6" x2="21" y2="6" />
+    <line x1="8" y1="12" x2="21" y2="12" />
+    <line x1="8" y1="18" x2="21" y2="18" />
+    <line x1="3" y1="6" x2="3.01" y2="6" />
+    <line x1="3" y1="12" x2="3.01" y2="12" />
+    <line x1="3" y1="18" x2="3.01" y2="18" />
+  </svg>
+);
+
+const IconClock = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const IconCheck = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const IconFlag = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+    <line x1="4" y1="22" x2="4" y2="15" />
+  </svg>
+);
+
+const IconCross = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+const IconArrowRight = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', display: 'inline-block' }}>
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
 function Quiz() {
   const { chapterId } = useParams();
   const navigate = useNavigate();
@@ -471,7 +532,7 @@ function Quiz() {
   if (error) return (
     <div className="quiz-error-page">
       <div className="quiz-error-box">
-        <span className="quiz-error-icon">⚠️</span>
+        <span className="quiz-error-icon"><IconWarning size={24} /></span>
         <p>{error}</p>
         <button onClick={() => navigate(-1)} className="btn-back-quiz">Go Back</button>
       </div>
@@ -484,7 +545,7 @@ function Quiz() {
       <div className="wa-modal-overlay">
         <div className="wa-confirm-card">
           <div className="wa-confirm-header">
-            <span className="wa-confirm-logo">📋</span>
+            <span className="wa-confirm-logo"><IconClipboard size={24} /></span>
             <div>
               <h3>Test Start Confirmation</h3>
               <p>WhatsApp-Style Quiz flow</p>
@@ -510,7 +571,7 @@ function Quiz() {
             </div>
 
             <div className="wa-confirm-instructions">
-              <h4>📝 Instructions:</h4>
+              <h4><IconList size={16} /> Instructions:</h4>
               <ul>
                 <li>Every question has 4 options with exactly 1 correct answer.</li>
                 <li>You can mark questions for review using the review button.</li>
@@ -526,7 +587,9 @@ function Quiz() {
 
           <div className="wa-confirm-actions">
             <button className="wa-btn-cancel" onClick={() => navigate(-1)}>Cancel</button>
-            <button className="wa-btn-start" onClick={handleStartTest}>Start Test 🚀</button>
+            <button className="wa-btn-start" onClick={handleStartTest}>
+              Start Test <IconArrowRight size={16} />
+            </button>
           </div>
         </div>
       </div>
@@ -547,12 +610,12 @@ function Quiz() {
         </div>
         <div className="quiz-topbar-center">
           <div className={`quiz-timer ${timeLeft <= 120 ? 'timer-warning' : ''} ${timeLeft <= 30 ? 'timer-danger' : ''}`}>
-            ⏱ {formatTime(timeLeft)}
+            <IconClock size={18} /> {formatTime(timeLeft)}
           </div>
         </div>
         <div className="quiz-topbar-right">
-          <span className="quiz-stat answered">✓ {answeredCount}</span>
-          <span className="quiz-stat marked">🚩 {markedCount}</span>
+          <span className="quiz-stat answered"><IconCheck size={14} /> {answeredCount}</span>
+          <span className="quiz-stat marked"><IconFlag size={14} /> {markedCount}</span>
         </div>
       </div>
 
@@ -596,7 +659,7 @@ function Quiz() {
           <div className="question-card">
             <div className="question-header">
               <span className="question-number">Question {currentIndex + 1}</span>
-              {isCurrentMarked && <span className="marked-badge">🚩 Marked</span>}
+              {isCurrentMarked && <span className="marked-badge"><IconFlag size={14} /> Marked</span>}
             </div>
             <p className="question-text">{currentQuestion.question_text}</p>
 
@@ -620,10 +683,10 @@ function Quiz() {
             {/* Action buttons */}
             <div className="question-actions">
               <button className="btn-mark" onClick={handleMark}>
-                {isCurrentMarked ? '🚩 Unmark' : '🚩 Mark for Review'}
+                {isCurrentMarked ? <><IconFlag size={14} /> Unmark</> : <><IconFlag size={14} /> Mark for Review</>}
               </button>
               {currentAnswer && (
-                <button className="btn-clear" onClick={handleClear}>✕ Clear Answer</button>
+                <button className="btn-clear" onClick={handleClear}><IconCross size={14} /> Clear Answer</button>
               )}
               <div className="keyboard-hint">Shortcuts: 1-4 = select, N/P = next/prev, M = mark, C = clear</div>
             </div>
@@ -654,14 +717,14 @@ function Quiz() {
                 className="btn-nav btn-submit-main"
                 onClick={() => setSubmitConfirm(true)}
               >
-                Submit Quiz ✓
+                Submit Quiz <IconCheck size={16} />
               </button>
             ) : (
               <button
                 className="btn-nav btn-next"
                 onClick={handleNext}
               >
-                Next →
+                Next <IconArrowRight size={16} />
               </button>
             )}
           </div>
@@ -689,8 +752,8 @@ function Quiz() {
             </div>
             <p className="modal-warning">
               {totalQuestions - answeredCount > 0
-                ? `⚠️ You have ${totalQuestions - answeredCount} unanswered question(s). Are you sure?`
-                : '✓ All questions answered. Ready to submit!'}
+                ? <><IconWarning size={14} /> You have {totalQuestions - answeredCount} unanswered question(s). Are you sure?</>
+                : <><IconCheck size={14} style={{ color: '#25D366' }} /> All questions answered. Ready to submit!</>}
             </p>
             <div className="modal-actions">
               <button className="btn-modal-cancel" onClick={() => setSubmitConfirm(false)}>
@@ -708,7 +771,7 @@ function Quiz() {
         <div className="wa-modal-overlay">
           <div className="wa-confirm-card wa-exit-confirm-card">
             <div className="wa-confirm-header wa-exit-header">
-              <span className="wa-confirm-logo wa-exit-logo">⚠️</span>
+              <span className="wa-confirm-logo wa-exit-logo"><IconWarning size={24} /></span>
               <div>
                 <h3>Accidental Exit Warning</h3>
                 <p>Test session in progress</p>
