@@ -28,6 +28,14 @@ const IconMathematics = ({ size = 28 }) => (
   </svg>
 );
 
+const IconBiology = ({ size = 28 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2z" />
+    <path d="M9 22v-3" />
+    <path d="M11 20l3.5-3.5" />
+  </svg>
+);
+
 const IconDefaultSubject = ({ size = 28 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -40,6 +48,7 @@ const getSubjectIcon = (name = '') => {
   if (lower.includes('physic')) return <IconPhysics />;
   if (lower.includes('chemist')) return <IconChemistry />;
   if (lower.includes('math')) return <IconMathematics />;
+  if (lower.includes('biolog')) return <IconBiology />;
   return <IconDefaultSubject />;
 };
 
