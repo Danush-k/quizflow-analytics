@@ -20,6 +20,6 @@ services:
       - key: PYTHONUNBUFFERED
         value: "1"
       - key: ALLOWED_ORIGINS
-        value: '["https://your-frontend.vercel.app", "http://localhost:5173"]'
+        value: '["https://quizflow-analytics.vercel.app", "http://localhost:5173"]'
 
     healthCheckPath: /health
