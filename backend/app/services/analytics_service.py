@@ -42,8 +42,10 @@ class AnalyticsService:
         rt_result = await db["responses"].aggregate(rt_pipeline).to_list(1)
         avg_rt = int(rt_result[0]["avg"]) if rt_result else 0
 
-        # Peak hour (IST)
+        # Peak hour (IST) in the last 24 hours
+        cutoff_date_24h = datetime.utcnow() - timedelta(hours=24)
         peak_pipeline = [
+            {"$match": {"created_at": {"$gte": cutoff_date_24h}}},
             {"$group": {
                 "_id": {"$hour": {"date": "$created_at", "timezone": "+05:30"}},
                 "count": {"$sum": 1}
@@ -305,12 +307,14 @@ class AnalyticsService:
     @staticmethod
     async def get_peak_hours() -> list:
         """
-        Session start activity grouped by hour of day (IST).
+        Session start activity grouped by hour of day (IST) in the last 24 hours.
         Returns all 24 hours — hours with no activity get count 0.
         """
         db = await get_db()
+        cutoff_date = datetime.utcnow() - timedelta(hours=24)
 
         pipeline = [
+            {"$match": {"created_at": {"$gte": cutoff_date}}},
             {"$group": {
                 "_id": {"$hour": {"date": "$created_at", "timezone": "+05:30"}},
                 "activity": {"$sum": 1}
